@@ -3,7 +3,7 @@ import { SET_CUR_PAGE, SET_CUR_STEP, SET_SELECTED_EMP,SET_EMP_DATA } from "./act
 const initial={
     employees:[],//list of employees
     cur_page:'list',//to dicide page
-    selected_employee:null,//to perform add edit
+    selected_employee:{},//to perform add edit
     cur_step:0
 };
 
