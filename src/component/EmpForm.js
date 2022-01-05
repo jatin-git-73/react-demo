@@ -6,11 +6,30 @@ import StepLabel from '@mui/material/StepLabel';
 import { connect } from "react-redux";
 import { setCurEmp, setPage, setStep } from "../redux/actions";
 import PersonalDetails from "./Forms/PersonalDetails";
+import BankDetails from "./Forms/BankDetails";
+import validate from "../validation";
+import ProfessonalDetails from "./Forms/ProfessonalDetails";
+import CurrentStatus from "./Forms/CurrentStatus";
+import ExperienceDetails from "./Forms/ExperienceDetails";
+import EducationDetails from "./Forms/EducationDetails";
 
 
 class EmpForm extends React.Component{
+    hanldeExitClick=()=>{
+        this.props.setStep(0);
+        this.props.setPage("list");
+    }
+    handlePreviousClick=()=>{
+        if(this.props.cur_step==0)return;
+        this.props.setStep(this.props.cur_step-1);
+    }
+    handleNextClick=(flag)=>{
+        if(flag)return;
+        //move to next step
+        this.props.setStep(this.props.cur_step+1);
+    }
     render(){
-        let errors={};
+        let errors=validate(this.props.cur_emp,this.props.cur_step);
         const steps = ['Personal Details', 'Bank Details', 'Professional Details',"Current Status","Experience Details","Educational Details"];
         return <>
             <Paper>
@@ -32,6 +51,16 @@ class EmpForm extends React.Component{
                             switch(this.props.cur_step){
                                 case 0:
                                     return <PersonalDetails error={errors} />
+                                case 1:
+                                    return <BankDetails />
+                                case 2:
+                                    return <ProfessonalDetails />
+                                case 3:
+                                    return <CurrentStatus />
+                                case 4:
+                                    return <ExperienceDetails/>
+                                case 5:
+                                    return <EducationDetails/>
                                 default : 
                                 return <h1>invalid step : {this.props.cur_step}</h1>
                             }
@@ -45,9 +74,9 @@ class EmpForm extends React.Component{
                                 display:'flex',
                                 justifyContent:'space-between'
                             }}>
-                                <Button variant="outlined"  > Previous </Button>
-                                <Button variant="outlined" color='error'  > Exit </Button>
-                                <Button variant="contained"  > Next </Button>
+                                <Button variant="outlined" disabled={this.props.cur_step==0} onClick={this.handlePreviousClick} > Previous </Button>
+                                <Button variant="outlined" color='error' onClick={this.hanldeExitClick}  > Exit </Button>
+                                <Button variant="contained"  disabled={errors.failed} onClick={()=>this.handleNextClick(errors.failed)} > Next </Button>
                             </Grid>
                             <Grid item md col='2'>
                             <Button disabled={this.props.cur_step+1<steps.length} variant="contained" style={{float:'right'}} >Submit</Button>
@@ -68,7 +97,7 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
     return {
-        // setPage:(page)=>{return dispatch(setPage(page));},
+        setPage:(page)=>{return dispatch(setPage(page));},
         setStep:(step)=>{return dispatch(setStep(step));},
         setCurEmp:(emp)=>{return dispatch(setCurEmp(emp));}
     }

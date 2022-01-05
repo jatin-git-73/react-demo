@@ -13,7 +13,7 @@ class EmpList extends React.Component{
 
     handleAddClick=()=>{
         this.props.setStep(0);//since we are adding
-        let new_emp={id:0};
+        let new_emp={id:0,date_of_birth:new Date()};
         this.props.setCurEmp(new_emp);
         this.props.setPage("form")//show the form
     }
