@@ -1,15 +1,22 @@
 import produce from "immer"
 import { SET_CUR_PAGE, SET_CUR_STEP, SET_SELECTED_EMP,SET_EMP_DATA, ADD_EMP, UPDATE_EMP, REMOVE_EMP } from "./actionTypes";
-const initial={
-    employees:[],//list of employees
-    cur_page:'list',//to dicide page
-    selected_employee:{},//to perform add edit
-    cur_step:0
+interface IAppState {
+    employees:any[],//list of employees
+    cur_page:string,//to dicide page
+    selected_employee:Object,//to perform add edit
+    cur_step:number
+}
+
+const initialState: IAppState = {
+        employees:[],//list of employees
+        cur_page:'list',//to dicide page
+        selected_employee:{},//to perform add edit
+        cur_step:0
 };
 
-export default function mainReducer(state=initial,action){
-    switch(action.type){
-        case REMOVE_EMP:
+function mainReducer(state:IAppState = initialState, action:any){
+        switch(action.type){
+                case REMOVE_EMP:
             return produce(state,draft=>{
                     let index=draft.employees.findIndex(t=>t.id==action.payload);
                     draft.employees.splice(index,1);
@@ -40,8 +47,10 @@ export default function mainReducer(state=initial,action){
 
         case SET_EMP_DATA:
             return produce(state, draft => {
-                draft.selected_employee[action.payload.name] = action.payload.value;
+                (draft.selected_employee as any)[action.payload.name] = action.payload.value;
             });
-    }
-    return state;
+                }
+        return state;
 }
+export default mainReducer
+  
