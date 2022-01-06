@@ -7,18 +7,42 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { setCurEmp, setPage, setStep } from "../redux/actions";
+import { removeEmp, setCurEmp, setPage, setStep } from "../redux/actions";
 
 class EmpList extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            search_query:''
+        }
+    }
 
-    handleAddClick=()=>{
-        this.props.setStep(0);//since we are adding
-        let new_emp={id:0,date_of_birth:new Date()};
-        this.props.setCurEmp(new_emp);
+    showForm=(emp)=>{
+        this.props.setStep(0);
+        this.props.setCurEmp(emp);
         this.props.setPage("form")//show the form
     }
 
+    handleAddClick=()=>{
+        let new_emp={id:0,date_of_birth:new Date()};
+        this.showForm(new_emp);
+    }
+    handleEditClick=(emp)=>{
+        this.showForm(emp);
+    }
+    handleDeleteClick=(id)=>{
+        this.props.removeEmp(id)
+    }
+    getList=(q)=>{
+        let list= this.props.list;
+        if(q!==''){
+            list=list.filter(t=>t.first_name.includes(q)||t.last_name.includes(q)||t.company_name.includes(q)||t.designation.includes(q)||t.department.includes(q));
+        }
+        return list;
+    }
+
     render(){
+        let list=this.getList(this.state.search_query)
        return <>
             <Paper>
             <Typography variant="h4" align="center" component="div" gutterBottom>
@@ -32,7 +56,7 @@ class EmpList extends React.Component{
                             justifyContent:'start',
                             padding:'10px'
                         }}>
-                        <TextField  label="Outlined" variant="outlined" />
+                        <TextField  defaultValue={this.state.search_query} onChange={(e)=>this.setState({search_query:e.target.value})} label="Search emp" variant="outlined" />
                         </div>
                     </Grid>
                     <Grid item md col='1'  >
@@ -59,7 +83,7 @@ class EmpList extends React.Component{
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        this.props.list.length==0?
+                                        list.length==0?
                                         <TableRow
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
@@ -68,18 +92,20 @@ class EmpList extends React.Component{
                                             </TableCell>
                                         </TableRow>
                                         :
-                                        this.props.list.map((row) => (
+                                        list.map((row) => (
                                             <TableRow
-                                            key={row.name}
+                                            key={row.id}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
                                             <TableCell component="th" scope="row">
-                                                {row.name}
+                                                {row.first_name} {row.last_name}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="right">{row.designation}</TableCell>
+                                            <TableCell align="right">{row.department}</TableCell>
+                                            <TableCell align="right">
+                                                <Button variant='contained' color='error' onClick={()=>this.handleDeleteClick(row.id)} > Delete </Button>&nbsp;
+                                                <Button variant='contained' onClick={()=>{this.handleEditClick(row)}} color='primary' > Edit</Button>
+                                            </TableCell>
                                             </TableRow>
                                         ))
                                     }
@@ -99,7 +125,8 @@ function mapDispatchToProps(dispatch){
     return {
         setPage:(page)=>{return dispatch(setPage(page));},
         setStep:(step)=>{return dispatch(setStep(step));},
-        setCurEmp:(emp)=>{return dispatch(setCurEmp(emp));}
+        setCurEmp:(emp)=>{return dispatch(setCurEmp(emp));},
+        removeEmp:(id)=>{return dispatch(removeEmp(id))}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(EmpList);

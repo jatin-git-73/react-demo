@@ -26,8 +26,11 @@ class ExperienceDetails extends React.Component{
     this.props.setEmpData(name,value);
   }
   render(){
-        let errors = validate(this.props.cur_emp,this.props.cur_step)
-        console.log("errors",errors)
+        let errors = this.props.errors;
+        //since errors.experience will be added when validation performed
+        if(errors.experience==undefined){
+          errors.experience = [];
+        }
         return <div 
         style={{
             display: 'flex',
@@ -42,7 +45,7 @@ class ExperienceDetails extends React.Component{
                         <Typography variant='h5'> Experience Details</Typography>
                     </div>
                     {
-                        this.props.cur_emp.experience!==undefined && this.props.cur_emp.experience.map((exp,index)=><ExperienceFrom index={index} errors={errors.experience[index]} exp={exp}/>)
+                        this.props.cur_emp.experience!==undefined && this.props.cur_emp.experience.map((exp,index)=><ExperienceFrom key={index} index={index} errors={errors.experience[index]} exp={exp}/>)
                     }
                     <div>
                         <Button variant="contained" color='primary' onClick={this.handleAddClick} >+Add</Button>

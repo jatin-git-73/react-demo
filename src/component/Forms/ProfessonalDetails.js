@@ -36,7 +36,7 @@ class ProfessionalDetails extends React.Component{
   }
   render(){
       let skills=["Javascript","HTML","CSS","JAVA","PHP","LARAVEL"];
-        let errors = validate(this.props.cur_emp,this.props.cur_step)
+        let errors = this.props.errors;
         return <div 
         style={{
 display: 'flex',
@@ -91,10 +91,10 @@ textAlign: 'center'
                         </div>
                     </div>
                     <div style={{padding:'10px'}}>
-                        <FormLabel style={{float:'left'}} textAlign='left'>Skills</FormLabel>
+                        <FormLabel style={{float:'left'}} >Skills</FormLabel>
                         <div>
                             {
-                                this.props.cur_emp.skills!==undefined && this.props.cur_emp.skills.map((item)=><Chip clickable label={item} onDelete={()=>{this.handleSkillDelete(item)}}/>)
+                                this.props.cur_emp.skills!==undefined && this.props.cur_emp.skills.map((item,index)=><Chip key={index} clickable label={item} onDelete={()=>{this.handleSkillDelete(item)}}/>)
                             }
                         </div>
                     </div>
@@ -113,7 +113,7 @@ textAlign: 'center'
                             skills.push(e.target.value)
                         }
                         this.handleInput("skills",skills);
-                        console.log("values",e.target.value);
+
                     }}
                   >
 
@@ -124,46 +124,6 @@ textAlign: 'center'
             ))}
           </Select>
           <Typography variant='caption'  textAlign='left' color='red' >{errors.skills}</Typography>
-
-
-{/* <TextField
- style={{
-     marginTop:'10px'
- }}
-    select
-    error={errors.skills!==undefined}
-    helperText={errors.skills}
-    justifyContent='start'
-    name="skills"
-    id="skills"
-    variant="standard"
-    label="skills"
-    onChange={(e)=>{
-        let skills=[];
-        if(Array.isArray(this.props.cur_emp.skills)){
-            skills=[...this.props.cur_emp.skills];
-        };
-        if(!skills.includes(e.target.value)){
-            skills.push(e.target.value)
-        }
-        this.handleInput("skills",skills);
-        console.log("values",e.target.value);
-    }}
-    // textAlign='left'
-    SelectProps={{
-    //   multiple: true,
-      value: this.props.cur_emp.skills!==undefined?this.props.cur_emp.skills:[],
-      renderValue:(list)=>{
-          return list.map(item=><Chip clickable label={item} onDelete={(item)=>{alert(item)}}/> )
-      },
-    }}
-  >{
-    skills.map(item=><MenuItem value={item}>{item}</MenuItem>)
-  }
-  </TextField> */}
-
-
-
 
                </div>
   }

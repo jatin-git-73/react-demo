@@ -34,7 +34,7 @@ class PersonalDetails extends React.Component{
       }
   }
   render(){
-        let errors = validate(this.props.cur_emp,this.props.cur_step)
+        let errors = this.props.errors;
         return <div 
         style={{
             display: 'flex',
@@ -61,13 +61,13 @@ class PersonalDetails extends React.Component{
                     <TextField error={errors.first_name!==undefined} helperText={errors.first_name} label="First Name" variant="standard"
                     defaultValue={this.props.cur_emp.first_name?this.props.cur_emp.first_name:''}
                     onChange={(e)=>{
-                            this.props.setEmpData("first_name",e.target.value)
+                            this.handleInput("first_name",e.target.value)
                     }}
                     />
                     <TextField error={errors.last_name!==undefined} helperText={errors.last_name}  label="Last Name" variant="standard" 
                     defaultValue={this.props.cur_emp.last_name?this.props.cur_emp.last_name:''}
                     onChange={(e)=>{
-                        this.props.setEmpData("last_name",e.target.value)
+                      this.handleInput("last_name",e.target.value)
                     }}
                     style={{
                         marginBottom:'10px',
@@ -78,7 +78,7 @@ class PersonalDetails extends React.Component{
                             label="Date of Birth"
                             value={this.props.cur_emp.date_of_birth?this.props.cur_emp.date_of_birth:new Date()}
                             onChange={(newValue) => {
-                                this.props.setEmpData("date_of_birth",newValue)
+                              this.handleInput("date_of_birth",newValue)
                             // setValue(newValue);
                             }}
                             renderInput={(params) => {
@@ -99,13 +99,13 @@ class PersonalDetails extends React.Component{
                         maxLength: 10,
                       }}
                      onChange={(e)=>{
-                        this.props.setEmpData("phone",e.target.value)
+                      this.handleInput("phone",e.target.value)
                     }}
                      defaultValue={this.props.cur_emp.phone?this.props.cur_emp.phone:''}
                     label="Phone" variant="standard" />
                     <TextField  label="Email" variant="standard"
                         onChange={(e)=>{
-                            this.props.setEmpData("email",e.target.value)
+                          this.handleInput("email",e.target.value)
                         }}
                      defaultValue={this.props.cur_emp.email?this.props.cur_emp.email:''}
                     error={errors.email!==undefined} helperText={errors.email}

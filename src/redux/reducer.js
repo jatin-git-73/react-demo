@@ -1,5 +1,5 @@
 import produce from "immer"
-import { SET_CUR_PAGE, SET_CUR_STEP, SET_SELECTED_EMP,SET_EMP_DATA } from "./actionTypes";
+import { SET_CUR_PAGE, SET_CUR_STEP, SET_SELECTED_EMP,SET_EMP_DATA, ADD_EMP, UPDATE_EMP, REMOVE_EMP } from "./actionTypes";
 const initial={
     employees:[],//list of employees
     cur_page:'list',//to dicide page
@@ -9,6 +9,22 @@ const initial={
 
 export default function mainReducer(state=initial,action){
     switch(action.type){
+        case REMOVE_EMP:
+            return produce(state,draft=>{
+                    let index=draft.employees.findIndex(t=>t.id==action.payload);
+                    draft.employees.splice(index,1);
+            })
+        case UPDATE_EMP:
+            return produce(state,draft=>{
+                let id=action.payload.id;
+                let index=draft.employees.findIndex(t=>t.id==id);
+                if(index<0)index=0;
+                draft.employees[index]=draft.selected_employee;
+            })
+        case ADD_EMP:
+            return produce(state,draft=>{
+                draft.employees.push(action.payload)
+            })
         case SET_CUR_PAGE:
             return produce(state, draft => {
                 draft.cur_page=action.payload;

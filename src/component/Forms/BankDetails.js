@@ -17,7 +17,7 @@ class BankDetails extends React.Component{
     this.props.setEmpData(name,value);
   }
   render(){
-        let errors = validate(this.props.cur_emp,this.props.cur_step)
+        let errors = this.props.errors;
         return <div 
         style={{
 display: 'flex',

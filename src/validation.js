@@ -8,7 +8,47 @@ function validatePanCard(pan_number){
     return regpan.test(pan_number)
 }
 
-function validateexperience(cur_emp){
+function validateEducation(cur_emp){
+
+    let errors={
+        failed:false,
+        education:[]
+    }
+    
+    if(cur_emp.education!==undefined && Array.isArray(cur_emp.education)){
+        for(let i=0;i<cur_emp.education.length;i++){
+            let cur_edu=cur_emp.education[i];
+            let cur_errors={
+                failed:false
+            }
+            if(cur_edu.course_name==undefined || cur_edu.course_name==''){
+                cur_errors.course_name='Please enter course name'
+                cur_errors.failed=true;
+                errors.failed=true;
+             }
+             if(cur_edu.university_name==undefined || cur_edu.university_name==''){
+                cur_errors.university_name='Please enter university name'
+                cur_errors.failed=true;
+                errors.failed=true;
+             }
+             if(cur_edu.grade==undefined || cur_edu.grade==''){
+                cur_errors.grade='Please enter grade'
+                cur_errors.failed=true;
+                errors.failed=true;
+             }
+             if(cur_edu.last_date==undefined){
+                cur_errors.last_date='Please select last date'
+                cur_errors.failed=true;
+                errors.failed=true;
+             }
+             errors.education.push(cur_errors);
+        }
+    }
+    
+    return errors;
+}
+
+function validateExperience(cur_emp){
     let errors={
         failed:false,
         experience:[]
@@ -198,7 +238,10 @@ function validateBankDetails(cur_emp){
 }
 
 export default function validate(cur_emp={},step=0){
-    let validators=[validatePersonalDetails,validateBankDetails,validateProfessionalDetails,validateCurrentStatus,validateexperience];
+
+    let validators=[validatePersonalDetails,validateBankDetails,validateProfessionalDetails,validateCurrentStatus,validateExperience,validateEducation];
+
     if(validators[step]==undefined)return {}
+
     return validators[step](cur_emp);
 }

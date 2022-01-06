@@ -42,59 +42,26 @@ class EducationForm extends React.Component{
         }}
         >
 
-                    <TextField error={errors.company_name!==undefined} helperText={errors.company_name} label="Company" variant="standard"
-                    defaultValue={this.props.edu.company_name?this.props.edu.company_name:''}
+                    <TextField error={errors.course_name!==undefined} helperText={errors.course_name} label="Course" variant="standard"
+                    defaultValue={this.props.edu.course_name?this.props.edu.course_name:''}
                     onChange={(e)=>{
-                            this.handleInput("company_name",e.target.value)
+                            this.handleInput("course_name",e.target.value)
                     }}
                     />
-                    <TextField error={errors.designation!==undefined} helperText={errors.designation}  label="Designation" variant="standard" 
-                    defaultValue={this.props.edu.designation?this.props.edu.designation:''}
+                    <TextField error={errors.university_name!==undefined} helperText={errors.university_name}  label="University Name" variant="standard" 
+                    defaultValue={this.props.edu.university_name?this.props.edu.university_name:''}
                     onChange={(e)=>{
-                        this.handleInput("designation",e.target.value)
+                        this.handleInput("university_name",e.target.value)
                     }}
                     style={{
                         marginBottom:'10px',
                     }}
                     />
                           
-                    <TextField  
-                     error={errors.department!==undefined} helperText={errors.department}
-                     onChange={(e)=>{
-                        this.handleInput("department",e.target.value)
-                    }}
-                     defaultValue={this.props.edu.department?this.props.edu.department:''}
-                    label="Department" variant="standard" />
-
-                    <TextField  label="CTC" variant="standard"
-                        onChange={(e)=>{
-                            this.handleInput("ctc",e.target.value)
-                        }}
-                     defaultValue={this.props.edu.ctc?this.props.edu.ctc:''}
-                    error={errors.ctc!==undefined} helperText={errors.ctc}
-                    />
+                    
                      <LocalizationProvider dateAdapter={AdapterDateFns} >
                             <MobileDatePicker
-                            label="From"
-                            value={this.props.edu.join_date?this.props.edu.join_date:new Date()}
-                            onChange={(newValue) => {
-                                this.handleInput("join_date",newValue)
-                            }}
-                            renderInput={(params) => {
-                                return <>
-                                <TextField 
-                                // helperText={errors.join_date}
-                                variant="standard"  {...params} />
-                                <Typography align="left" color={'red'} variant='caption' >{errors.join_date}</Typography>
-                                </>
-                            }
-                            
-                            }
-                            />
-                    </LocalizationProvider>
-                    <LocalizationProvider dateAdapter={AdapterDateFns} >
-                            <MobileDatePicker
-                            label="To"
+                            label="Passed on"
                             value={this.props.edu.last_date?this.props.edu.last_date:new Date()}
                             onChange={(newValue) => {
                                 this.handleInput("last_date",newValue)
@@ -111,6 +78,13 @@ class EducationForm extends React.Component{
                             }
                             />
                     </LocalizationProvider>
+                    <TextField  label="Grade" variant="standard"
+                        onChange={(e)=>{
+                            this.handleInput("grade",e.target.value)
+                        }}
+                     defaultValue={this.props.edu.grade?this.props.edu.grade:''}
+                    error={errors.grade!==undefined} helperText={errors.grade}
+                    />
                     <div style={{display:'flex',padding:'10px'}}>
                       <Button variant="contained" color='secondary' onClick={this.handleRemoveClcik}>Remove</Button>
                     </div>
@@ -118,7 +92,6 @@ class EducationForm extends React.Component{
   }
 }
 function mapStateToProps(state){
-  console.log("cur_emp",state.selected_employee)
   return {
       cur_emp:state.selected_employee,
       cur_step : state.cur_step

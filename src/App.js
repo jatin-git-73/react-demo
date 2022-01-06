@@ -20,7 +20,7 @@ class App extends React.Component{
        default :
           cur_page = <h1>Page not found </h1>;
      }
-     return <>{cur_page}</>
+     return <><div style={{padding:'0px 10% 0px 10% '}}>{cur_page}</div></>
   }
 }
 function mapStateToProps(state){

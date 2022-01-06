@@ -118,7 +118,6 @@ marginTop:'10px'
   }
 }
 function mapStateToProps(state){
-  console.log("cur_emp",state.selected_employee)
   return {
       cur_emp:state.selected_employee,
       cur_step : state.cur_step

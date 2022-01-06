@@ -26,7 +26,11 @@ class EducationDetails extends React.Component{
     this.props.setEmpData(name,value);
   }
   render(){
-        let errors = validate(this.props.cur_emp,this.props.cur_step)
+        let errors = this.props.errors;
+        //since errors.education will be added when validation performed
+        if(errors.education==undefined){
+          errors.education = [];
+        }
         return <div 
         style={{
             display: 'flex',
@@ -41,7 +45,7 @@ class EducationDetails extends React.Component{
                         <Typography variant='h5'> Education Details</Typography>
                     </div>
                     {
-                        this.props.cur_emp.education!==undefined && this.props.cur_emp.education.map((edu,index)=><EducationForm index={index} errors={errors.education!==undefined?errors.education[index]:undefined} edu={edu}/>)
+                        this.props.cur_emp.education!==undefined && this.props.cur_emp.education.map((edu,index)=><EducationForm index={index} key={index} errors={errors.education!==undefined?errors.education[index]:undefined} edu={edu}/>)
                     }
                     <div>
                         <Button variant="contained" color='primary' onClick={this.handleAddClick} >+Add</Button>

@@ -1,4 +1,4 @@
-import { SET_CUR_PAGE, SET_CUR_STEP,SET_EMP_DATA,SET_SELECTED_EMP } from "./actionTypes";
+import { ADD_EMP, REMOVE_EMP, SET_CUR_PAGE, SET_CUR_STEP,SET_EMP_DATA,SET_SELECTED_EMP, UPDATE_EMP } from "./actionTypes";
 
 export function setPage(page='list'){
     return {
@@ -28,5 +28,26 @@ export function setEmpData(name,value){
             name:name,
             value:value
         }
+    }
+}
+
+export function addEmp(emp){
+    return {
+        type    : ADD_EMP,
+        payload : emp
+    }
+}
+
+export function updateEmp(emp){
+    return {
+        type    : UPDATE_EMP,
+        payload : emp
+    }
+}
+
+export function removeEmp(id){
+    return {
+        type:REMOVE_EMP,
+        payload:id
     }
 }
