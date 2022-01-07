@@ -1,6 +1,23 @@
-import React from 'react';
+import { Paper } from '@mui/material';
+import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import EmpForm from './Components/EmpForm';
+import EmpListPage from './Components/EmpListPage';
+import { IAppState } from './redux/types';
+
+const getCurrentPage=(state:IAppState)=>state.cur_page;
 
 function App() {
-  return (<h1>test app</h1>);
+  const cur_page=useSelector(getCurrentPage);
+  let content=null;
+  if(cur_page=='list'){
+    content = (<EmpListPage/>);
+  }else if(cur_page=='form'){
+    content = (<EmpForm/>);
+  }else {
+    content = <>page not found</>
+  }
+  
+  return <div style={{padding:'0px 10% 0px 10% '}}><Paper style={{marginTop:'25px',padding:'15px'}}> {content} </Paper></div>
 }
 export default App;

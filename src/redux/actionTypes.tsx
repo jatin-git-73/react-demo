@@ -1,3 +1,5 @@
+import { Action } from "redux";
+
 export const SET_EMP_LIST       = 'SET_EMP_LIST' 
 export const ADD_EMP            = 'ADD_EMP'
 export const UPDATE_EMP         = 'UPDATE_EMP'
