@@ -1,3 +1,4 @@
+
 export interface EducationDetails {
   course_name: string;
   university_name: string;
@@ -19,6 +20,12 @@ export interface EducationDetailsError {
   grade: string;
   last_date: string;
   failed: boolean;
+}
+export interface EducationDetailsErrors{failed:boolean,education:EducationDetailsError[]}
+
+export interface ExperienceDetailsErrors{
+  failed:boolean,
+  experience:ExperienceDetailsError[]
 }
 export interface ExperienceDetailsError {
   failed: boolean;
@@ -64,9 +71,6 @@ export interface IAppState {
   cur_step: number;
 }
 
-export interface EmpFormProps {
-  errors: object;
-}
 
 export interface CurrentStatusError {
   failed: boolean;
@@ -100,6 +104,8 @@ export interface BankDetailsError {
   pan_number: string;
   aadhar_number: string;
 }
-export interface ValidationError{
-    failed:boolean
+
+export type ValidationError =PersonalDetailsError|ProfessionDetailsError|CurrentStatusError|ExperienceDetailsErrors|EducationDetailsErrors|BankDetailsError
+export interface EmpFormProps{
+  errors:ValidationError
 }

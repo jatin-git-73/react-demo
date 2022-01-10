@@ -1,10 +1,16 @@
 import { Step, StepLabel, Stepper, Grid, Button } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IAppState, ValidationError } from "../redux/types";
 import PersonalDetails from "./Forms/PersonalDetails";
-import validate from "../Validation";
+import validate, { getDefaultErrors } from "../Validation";
 import { setStep } from "../redux/actions";
+import BankDetails from "./Forms/BankDetails";
+import ProfessonalDetails from "./Forms/ProfessonalDetails";
+import CurrentStatus from "./Forms/CurrentStatus";
+import ExperienceDetails from "./Forms/ExperienceDetails";
+import EducationDetails from "./Forms/EducationDetails";
+
 
 const getSteps = () => {
   return [
@@ -22,45 +28,59 @@ const getCurStep = (state: IAppState) => {
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;
 };
-
-
+interface empFormState {
+  errors: ValidationError[];
+}
 
 const EmpForm = () => {
   const cur_step = useSelector(getCurStep);
   const cur_emp = useSelector(getCurEmp);
-  const dispatch =useDispatch();
+  const dispatch = useDispatch();
   const steps = getSteps();
   const id = 0;
-  const [errors, setErrors] = useState<Array<ValidationError>>([]) ;
+  const [state, setState] = useState({
+    errors: [getDefaultErrors(cur_step)],
+  } as empFormState);
 
-  const doValidation = useCallback(() => {
+  //just a counter to reflect useEffect
+  const [nextstep, setNextStep] = useState(0);
+
+  useEffect(() => {
+    if (nextstep == 0) {
+      return;
+    }
+    let errors = getErrors();
+    if (errors !== undefined && errors.failed == false) {
+      dispatch(setStep(cur_step + 1));
+    }
+  }, [nextstep]);
+
+  const doValidation = () => {
     let new_errors = validate(cur_emp, cur_step);
-     let cur_errors=[...errors];
-     cur_errors[cur_step-1]=new_errors
-    setErrors(cur_errors);
-  });
+    let cur_errors = [...state.errors];
+    cur_errors[cur_step] = new_errors;
+    let new_state = { errors: cur_errors };
+    setState(new_state);
+  };
 
-const getErrors= useCallback(()=>{
-        let cur_errors = errors[cur_step-1];
-        if(cur_errors==undefined){
-            return {failed:false}
-        }
-        return cur_errors;
-    },[]);
+  const getErrors = () => {
+    let cur_errors = state.errors[cur_step];
+    if (cur_errors == undefined) {
+      return getDefaultErrors(cur_step); //by default we assume its failed
+    }
+    return cur_errors;
+  };
+  const handleNextClick = () => {
+    if (cur_step < getSteps().length) {
+      doValidation();
+      setNextStep(nextstep + 1);
+    }
+  };
 
-  const handleNextClick = useCallback(
-      () => {
-        if (cur_step < getSteps().length) {
-          doValidation();
-          let cur_errors = getErrors();
-          if (cur_errors.failed ==false) {
-            //move to next step
-            dispatch(setStep(cur_step + 1))
-          }
-        }
-      },[]
-  );
-  console.log("errors",errors)
+  const handlePreviousClick = () => {
+    if (cur_step == 0) return;
+    dispatch(setStep(cur_step - 1));
+  };
   return (
     <>
       <Stepper activeStep={cur_step} alternativeLabel>
@@ -76,16 +96,16 @@ const getErrors= useCallback(()=>{
         switch (cur_step) {
           case 0:
             return <PersonalDetails errors={getErrors()} />;
-          // case 1:
-          //     return <BankDetails errors={errors}  />
-          // case 2:
-          //     return <ProfessonalDetails errors={errors}  />
-          // case 3:
-          //     return <CurrentStatus errors={errors}   />
-          // case 4:
-          //     return <ExperienceDetails errors={errors}  />
-          // case 5:
-          //     return <EducationDetails errors={errors}  />
+          case 1:
+            return <BankDetails errors={getErrors()} />;
+          case 2:
+            return <ProfessonalDetails errors={getErrors()} />;
+          case 3:
+            return <CurrentStatus errors={getErrors()} />;
+          case 4:
+            return <ExperienceDetails errors={getErrors()} />;
+          case 5:
+              return <EducationDetails errors={getErrors()}  />
           default:
             return <h1>invalid step : {cur_step}</h1>;
         }
@@ -108,7 +128,7 @@ const getErrors= useCallback(()=>{
           <Button
             variant="outlined"
             disabled={cur_step == 0}
-            // onClick={handlePreviousClick}
+            onClick={handlePreviousClick}
           >
             {" "}
             Previous{" "}

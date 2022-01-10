@@ -1,4 +1,4 @@
-import { CurrentStatusError, EducationDetailsError, Employee, ExperienceDetailsError, PersonalDetailsError, ProfessionDetailsError, BankDetailsError, ValidationError } from './redux/types';
+import { CurrentStatusError, EducationDetailsError, Employee, ExperienceDetailsError, PersonalDetailsError, ProfessionDetailsError, BankDetailsError, ValidationError, EducationDetailsErrors } from './redux/types';
 function validateEmail(email:string) 
 {
     return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email));
@@ -9,9 +9,11 @@ function validatePanCard(pan_number:string){
     return regpan.test(pan_number)
 }
 
+
+
 function validateEducation(cur_emp:Employee){
 
-    let errors:{failed:boolean,education:EducationDetailsError[]}={
+    let errors : EducationDetailsErrors = {
         failed:false,
         education:[]
     }
@@ -117,6 +119,7 @@ function validateExperience(cur_emp:Employee){
     return errors;
 }
 
+
 function validateCurrentStatus(cur_emp:Employee){
     let errors:CurrentStatusError={
         failed:false,
@@ -153,6 +156,9 @@ function validateCurrentStatus(cur_emp:Employee){
      }
      return errors;
  }
+
+
+
 
  function validateProfessionalDetails(cur_emp:Employee ){
     let errors:ProfessionDetailsError={
@@ -238,6 +244,7 @@ function validatePersonalDetails(cur_emp:Employee){
     }
     return errors;
 }
+
 function validateBankDetails(cur_emp:Employee){
     let errors:BankDetailsError = {
         failed: false,
@@ -275,8 +282,65 @@ function validateBankDetails(cur_emp:Employee){
     return errors;
 }
 
+
+
+export function getDefaultErrors(cur_step:number):ValidationError{
+
+    let default_personal_details_error:PersonalDetailsError={
+        failed:false,
+        first_name: '',
+        last_name: '',
+        date_of_birth: '',
+        email: '',
+        phone: ''
+    }
+
+    let default_professionalDetails_error:ProfessionDetailsError={
+        failed      :   false,
+        exp_year    :   '',
+        exp_month   :   '',
+        skills      :   ''
+    }
+
+    let default_current_status_error:CurrentStatusError={
+        failed:false,
+        company_name:'',
+        designation:'',
+        department:'',
+        ctc:'',
+        join_date:''
+    }
+
+    let default_experience_error:{
+        failed:boolean,
+        experience:ExperienceDetailsError[]
+    }={
+        failed:false,
+        experience:[]
+    }
+
+    let default_educational_details_error:{failed:boolean,education:EducationDetailsError[]}={
+        failed:false,
+        education:[]
+    }
+
+    let default_bank_details_errors:BankDetailsError = {
+        failed: false,
+        account_number: '',
+        ifsc_code: '',
+        pan_number: '',
+        aadhar_number:''
+    }
+
+    let default_errors=[default_personal_details_error,default_bank_details_errors,default_professionalDetails_error,
+        default_current_status_error,default_experience_error,default_educational_details_error];
+        return default_errors[cur_step];
+}
+
 export default function validate(cur_emp:Employee,step=0):ValidationError{
     let validators=[validatePersonalDetails,validateBankDetails,validateProfessionalDetails,validateCurrentStatus,validateExperience,validateEducation];
-    if(validators[step]==undefined)return {failed:false}
+    if(validators[step]==undefined){
+        throw Error("Invalid step :"+step)
+    }
     return validators[step](cur_emp);
 }

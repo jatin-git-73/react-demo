@@ -2,7 +2,13 @@ import { Typography, FormLabel, TextField, Grid } from "@mui/material";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmpData } from "../../redux/actions";
-import { EmpFormProps, EmployeeNodeVaule, IAppState } from "../../redux/types";
+import {
+  ValidationError,
+  EmployeeNodeVaule,
+  IAppState,
+  PersonalDetailsError,
+  EmpFormProps,
+} from "../../redux/types";
 
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -39,6 +45,7 @@ const PersonalDetails = (props: EmpFormProps) => {
     }
   }, []);
 
+  let errors = props.errors as PersonalDetailsError;
   return (
     <>
       <div
@@ -69,15 +76,13 @@ const PersonalDetails = (props: EmpFormProps) => {
           <img width="200" src={photo} />
           <input type="file" onChange={handleFileUpload} />
         </div>
-        <Grid container 
-        direction="row"
-        justifyContent="space-between"
-        >
+        <Grid container direction="row" justifyContent="space-between">
           <Grid item md={5}>
             <TextField
+              size="small"
               fullWidth
-              error={false}
-              helperText={""}
+              error={errors.first_name !== ""}
+              helperText={errors.first_name}
               label="First Name"
               variant="outlined"
               defaultValue={cur_emp.first_name ? cur_emp.first_name : ""}
@@ -88,9 +93,10 @@ const PersonalDetails = (props: EmpFormProps) => {
           </Grid>
           <Grid item md={5}>
             <TextField
+              size="small"
               fullWidth
-              error={false}
-              helperText={""}
+              error={errors.last_name !== ""}
+              helperText={errors.last_name}
               label="Last Name"
               variant="outlined"
               defaultValue={cur_emp.last_name ? cur_emp.last_name : ""}
@@ -106,8 +112,9 @@ const PersonalDetails = (props: EmpFormProps) => {
           <Grid item md={5}>
             <TextField
               fullWidth
-              error={false}
-              helperText={"error here"}
+              size="small"
+              error={errors.phone !== ""}
+              helperText={errors.phone}
               inputProps={{
                 maxLength: 10,
               }}
@@ -120,16 +127,20 @@ const PersonalDetails = (props: EmpFormProps) => {
             />
           </Grid>
           <Grid item md={5}>
-
-          <TextField fullWidth label="Email" variant="outlined"
-                        onChange={(e)=>{
-                          handleInput("email",e.target.value)
-                        }}
-                     defaultValue={cur_emp.email?cur_emp.email:''}
-                    error={false} helperText={''}
-                    />          
-         </Grid>
-          <Grid item md={5}>
+            <TextField
+              fullWidth
+              label="Email"
+              variant="outlined"
+              size="small"
+              onChange={(e) => {
+                handleInput("email", e.target.value);
+              }}
+              defaultValue={cur_emp.email ? cur_emp.email : ""}
+              error={errors.email !== ""}
+              helperText={errors.email}
+            />
+          </Grid>
+          <Grid item md={5} style={{ marginTop: "10px" }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <MobileDatePicker
                 label="Date of Birth"
@@ -146,10 +157,11 @@ const PersonalDetails = (props: EmpFormProps) => {
                         fullWidth
                         // helperText={errors.date_of_birth}
                         variant="outlined"
+                        size="small"
                         {...params}
                       />
                       <Typography align="left" color={"red"} variant="caption">
-                        error is here
+                        {errors.date_of_birth}
                       </Typography>
                     </>
                   );
@@ -157,7 +169,6 @@ const PersonalDetails = (props: EmpFormProps) => {
               />
             </LocalizationProvider>
           </Grid>
-
         </Grid>
       </div>
     </>
