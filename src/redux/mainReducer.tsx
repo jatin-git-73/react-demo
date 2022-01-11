@@ -1,5 +1,6 @@
 import produce from "immer";
 import { AnyAction } from "redux";
+import createSagaMiddleware from "redux-saga";
 import {
   SET_CUR_PAGE,
   SET_CUR_STEP,
@@ -8,6 +9,7 @@ import {
   ADD_EMP,
   UPDATE_EMP,
   REMOVE_EMP,
+  SET_EMP_LIST,
 } from "./actionTypes";
 import { IAppState, Employee } from "./types";
 
@@ -20,6 +22,10 @@ const initialState: IAppState = {
 
 function mainReducer(state: IAppState = initialState, action: AnyAction) {
   switch (action.type) {
+    case SET_EMP_LIST:
+      return produce(state, (draft) => {
+        draft.employees = action.payload;
+      });
     case REMOVE_EMP:
       return produce(state, (draft) => {
         let index = draft.employees.findIndex((t) => t.id == action.payload);
