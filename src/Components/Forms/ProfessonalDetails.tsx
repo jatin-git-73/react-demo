@@ -79,11 +79,12 @@ export default function ProfessonalDetails(props: EmpFormProps) {
       >
         <div style={{ width: "49%" }}>
           <TextField
+            size="small"
             fullWidth
             error={errors.exp_year !== ""}
             helperText={errors.exp_year}
             label="Years"
-            variant="standard"
+            variant="outlined"
             defaultValue={cur_emp.exp_year ? cur_emp.exp_year : ""}
             inputProps={{
               type: "number",
@@ -96,11 +97,12 @@ export default function ProfessonalDetails(props: EmpFormProps) {
         </div>
         <div style={{ width: "49%" }}>
           <TextField
+            size="small"
             fullWidth
             error={errors.exp_month !== ""}
             helperText={errors.exp_month}
             label="Months"
-            variant="standard"
+            variant="outlined"
             inputProps={{
               type: "number",
               min: 0,

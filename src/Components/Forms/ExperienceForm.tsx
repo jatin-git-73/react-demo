@@ -123,7 +123,7 @@ export default function ExperienceForm(props: ExperienceFormProps) {
               handleInput("ctc", e.target.value);
             }}
             defaultValue={props.exp.ctc ? props.exp.ctc : ""}
-            error={errors.ctc !== ""}
+            error={errors.ctc ? true : false}
             helperText={errors.ctc}
             size="small"
           />

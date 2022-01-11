@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { IAppState, ValidationError } from "../redux/types";
 import PersonalDetails from "./Forms/PersonalDetails";
 import validate, { getDefaultErrors } from "../Validation";
-import { setStep } from "../redux/actions";
 import BankDetails from "./Forms/BankDetails";
 import ProfessonalDetails from "./Forms/ProfessonalDetails";
 import CurrentStatus from "./Forms/CurrentStatus";
 import ExperienceDetails from "./Forms/ExperienceDetails";
 import EducationDetails from "./Forms/EducationDetails";
-
-
+import {
+  addEmp,
+  setCurEmp,
+  setPage,
+  setStep,
+  updateEmp,
+} from "../redux/actions";
 const getSteps = () => {
   return [
     "Personal Details",
@@ -25,6 +29,14 @@ const getSteps = () => {
 const getCurStep = (state: IAppState) => {
   return state.cur_step;
 };
+const getNextId = (state: IAppState) => {
+  let next_id = 0;
+  if (state.employees.length > 0) {
+    next_id = state.employees[state.employees.length - 1].id;
+  }
+  next_id++;
+  return next_id;
+};
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;
 };
@@ -36,6 +48,7 @@ const EmpForm = () => {
   const cur_step = useSelector(getCurStep);
   const cur_emp = useSelector(getCurEmp);
   const dispatch = useDispatch();
+  const next_id = useSelector(getNextId);
   const steps = getSteps();
   const id = 0;
   const [state, setState] = useState({
@@ -77,6 +90,25 @@ const EmpForm = () => {
     }
   };
 
+  const handleSubmitClick = () => {
+    doValidation();
+    let errors = getErrors();
+    if (errors.failed === false) {
+      let emp = { ...cur_emp };
+      alert("thanks for joining");
+
+      if (emp.id == 0) {
+        emp.id = next_id;
+        dispatch(addEmp(emp));
+      } else {
+        dispatch(updateEmp(emp));
+      }
+      dispatch(setStep(0));
+      dispatch(setCurEmp({}));
+      dispatch(setPage("list"));
+    }
+  };
+
   const handlePreviousClick = () => {
     if (cur_step == 0) return;
     dispatch(setStep(cur_step - 1));
@@ -105,7 +137,7 @@ const EmpForm = () => {
           case 4:
             return <ExperienceDetails errors={getErrors()} />;
           case 5:
-              return <EducationDetails errors={getErrors()}  />
+            return <EducationDetails errors={getErrors()} />;
           default:
             return <h1>invalid step : {cur_step}</h1>;
         }
@@ -152,7 +184,7 @@ const EmpForm = () => {
           <Button
             disabled={cur_step + 1 < steps.length}
             variant="contained"
-            // onClick={handleSubmitClick}
+            onClick={handleSubmitClick}
             style={{ float: "right" }}
           >
             Submit
