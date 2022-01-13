@@ -7,17 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { setEmpData } from "../../redux/actions";
 import {
-  Grid,
-  Button,
   Chip,
   ListItemText,
   TextField,
-  Paper,
   Select,
   Typography,
   FormLabel,
   MenuItem,
-  Badge,
 } from "@mui/material";
 
 const getCurEmp = (state: IAppState) => {
@@ -28,28 +24,37 @@ export default function ProfessonalDetails(props: EmpFormProps) {
   const cur_emp = useSelector(getCurEmp);
   let errors = props.errors as ProfessionDetailsError;
   const dispatch = useDispatch();
-  const handleInput = useCallback((name, value) => {
-    dispatch(setEmpData(name, value));
-  }, []);
-  const handleFileUpload = useCallback((evt) => {
-    var files = evt.target.files;
-    for (var i = 0, f; (f = files[i]); i++) {
-      var reader = new FileReader();
-      reader.onload = ((theFile) => {
-        return (e) => {
-          handleInput("resume", (e.target as any).result);
-        };
-      })(f);
-      reader.readAsDataURL(f);
-    }
-  }, []);
+  const handleInput = useCallback(
+    (name, value) => {
+      dispatch(setEmpData(name, value));
+    },
+    [dispatch]
+  );
+  const handleFileUpload = useCallback(
+    (evt) => {
+      var files = evt.target.files;
+      for (var i = 0, f; (f = files[i]); i++) {
+        var reader = new FileReader();
+        reader.onload = ((theFile) => {
+          return (e) => {
+            handleInput("resume", (e.target as any).result);
+          };
+        })(f);
+        reader.readAsDataURL(f);
+      }
+    },
+    [handleInput]
+  );
 
-  const handleSkillDelete = useCallback((skill: string) => {
-    let skills = [...cur_emp.skills];
-    let index = skills.indexOf(skill);
-    skills.splice(index, 1);
-    handleInput("skills", skills);
-  }, []);
+  const handleSkillDelete = useCallback(
+    (skill: string) => {
+      let skills = [...cur_emp.skills];
+      let index = skills.indexOf(skill);
+      skills.splice(index, 1);
+      handleInput("skills", skills);
+    },
+    [cur_emp.skills, handleInput]
+  );
 
   return (
     <div

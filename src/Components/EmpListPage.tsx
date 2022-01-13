@@ -1,33 +1,37 @@
-import { Paper, Typography, Grid, TextField, Button } from "@mui/material";
+import { Typography, Grid, TextField, Button } from "@mui/material";
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPage, setStep, setCurEmp, removeEmp } from "../redux/actions";
-import { IAppState } from "../redux/types";
 import EmpList from "./EmpList";
-import NoResults from "./NoResults";
-
-const getEmpList = (state: IAppState) => state.employees;
 
 const EmpListPage = () => {
   const dispatch = useDispatch();
-  const list = useSelector(getEmpList);
   let [search_query, setSearchQuery] = useState("");
 
-  const showForm = useCallback((emp) => {
-    dispatch(setStep(0));
-    dispatch(setCurEmp(emp));
-    dispatch(setPage("form"));
-  }, []);
-  const handleEditClick = useCallback((emp) => {
-    showForm(emp);
-  }, []);
-  const handleDeleteClick = useCallback((id) => {
-    dispatch(removeEmp(id));
-  }, []);
+  const showForm = useCallback(
+    (emp) => {
+      dispatch(setStep(0));
+      dispatch(setCurEmp(emp));
+      dispatch(setPage("form"));
+    },
+    [dispatch]
+  );
+  const handleEditClick = useCallback(
+    (emp) => {
+      showForm(emp);
+    },
+    [showForm]
+  );
+  const handleDeleteClick = useCallback(
+    (id) => {
+      dispatch(removeEmp(id));
+    },
+    [dispatch]
+  );
   const handleAddClick = useCallback(() => {
     let new_emp = { id: 0, date_of_birth: new Date() };
     showForm(new_emp);
-  }, []);
+  }, [showForm]);
 
   return (
     <>

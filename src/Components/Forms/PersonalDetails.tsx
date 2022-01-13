@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmpData } from "../../redux/actions";
 import {
-  ValidationError,
   EmployeeNodeVaule,
   IAppState,
   PersonalDetailsError,
@@ -15,7 +14,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 const getPhoto = (state: IAppState) => {
-  if (state.selected_employee.photo == "") return "images/no-pic.svg";
+  if (state.selected_employee.photo === "") return "images/no-pic.svg";
   return state.selected_employee.photo;
 };
 const getCurEmp = (state: IAppState) => {
@@ -25,25 +24,31 @@ const PersonalDetails = (props: EmpFormProps) => {
   const photo = useSelector(getPhoto);
   const cur_emp = useSelector(getCurEmp);
   const dispatch = useDispatch();
-  const handleInput = useCallback((name: string, value: EmployeeNodeVaule) => {
-    dispatch(setEmpData(name, value));
-  }, []);
-  const handleFileUpload = useCallback((evt) => {
-    var files = evt.target.files;
-    for (var i = 0, f: Blob; i < files.length; i++) {
-      f = files[i];
-      if (!f.type.match("image.*")) {
-        continue;
+  const handleInput = useCallback(
+    (name: string, value: EmployeeNodeVaule) => {
+      dispatch(setEmpData(name, value));
+    },
+    [dispatch]
+  );
+  const handleFileUpload = useCallback(
+    (evt) => {
+      var files = evt.target.files;
+      for (var i = 0, f: Blob; i < files.length; i++) {
+        f = files[i];
+        if (!f.type.match("image.*")) {
+          continue;
+        }
+        var reader = new FileReader();
+        reader.onload = ((theFile) => {
+          return (e) => {
+            handleInput("photo", (e.target as any).result);
+          };
+        })(f);
+        reader.readAsDataURL(f);
       }
-      var reader = new FileReader();
-      reader.onload = ((theFile) => {
-        return (e) => {
-          handleInput("photo", (e.target as any).result);
-        };
-      })(f);
-      reader.readAsDataURL(f);
-    }
-  }, []);
+    },
+    [handleInput]
+  );
 
   let errors = props.errors as PersonalDetailsError;
   return (
@@ -73,7 +78,7 @@ const PersonalDetails = (props: EmpFormProps) => {
             marginBottom: "15px",
           }}
         >
-          <img width="200" src={photo} />
+          <img width="200" src={photo} alt="profile-pic" />
           <input type="file" onChange={handleFileUpload} />
         </div>
         <Grid container direction="row" justifyContent="space-between">

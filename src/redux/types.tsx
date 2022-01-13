@@ -1,4 +1,3 @@
-
 export interface EducationDetails {
   course_name: string;
   university_name: string;
@@ -21,11 +20,14 @@ export interface EducationDetailsError {
   last_date: string;
   failed: boolean;
 }
-export interface EducationDetailsErrors{failed:boolean,education:EducationDetailsError[]}
+export interface EducationDetailsErrors {
+  failed: boolean;
+  education: EducationDetailsError[];
+}
 
-export interface ExperienceDetailsErrors{
-  failed:boolean,
-  experience:ExperienceDetailsError[]
+export interface ExperienceDetailsErrors {
+  failed: boolean;
+  experience: ExperienceDetailsError[];
 }
 export interface ExperienceDetailsError {
   failed: boolean;
@@ -71,7 +73,6 @@ export interface IAppState {
   cur_step: number;
 }
 
-
 export interface CurrentStatusError {
   failed: boolean;
   company_name: string;
@@ -105,7 +106,27 @@ export interface BankDetailsError {
   aadhar_number: string;
 }
 
-export type ValidationError =PersonalDetailsError|ProfessionDetailsError|CurrentStatusError|ExperienceDetailsErrors|EducationDetailsErrors|BankDetailsError
-export interface EmpFormProps{
-  errors:ValidationError
+export type ValidationError =
+  | PersonalDetailsError
+  | ProfessionDetailsError
+  | CurrentStatusError
+  | ExperienceDetailsErrors
+  | EducationDetailsErrors
+  | BankDetailsError;
+export interface EmpFormProps {
+  errors: ValidationError;
+}
+
+export interface EmpFormState {
+  errors: ValidationError[];
+}
+
+export interface NoresultProps {
+  search_query: string;
+  result_count: number;
+}
+export interface ExperienceFormProps {
+  index: number;
+  exp: Experience;
+  errors: ExperienceDetailsError;
 }

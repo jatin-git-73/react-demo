@@ -1,18 +1,13 @@
-import {
-  ValidationError,
-  IAppState,
-  BankDetailsError,
-  EmpFormProps,
-} from "../../redux/types";
+import { IAppState, BankDetailsError, EmpFormProps } from "../../redux/types";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography, FormLabel, TextField, Grid } from "@mui/material";
+import { Typography, TextField, Grid } from "@mui/material";
 import { setEmpData } from "../../redux/actions";
 
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;
 };
 
-export default function (props: EmpFormProps) {
+export default function BankDetails(props: EmpFormProps) {
   const cur_emp = useSelector(getCurEmp);
   const dispatch = useDispatch();
 

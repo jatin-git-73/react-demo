@@ -1,9 +1,7 @@
 import {
-  EmpFormProps,
-  Experience,
   ExperienceDetailsError,
-  ExperienceDetailsErrors,
   IAppState,
+  ExperienceFormProps,
 } from "../../redux/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmpData } from "../../redux/actions";
@@ -11,25 +9,7 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { useCallback } from "react";
-import {
-  Grid,
-  Button,
-  Chip,
-  ListItemText,
-  TextField,
-  Paper,
-  Select,
-  Typography,
-  FormLabel,
-  MenuItem,
-  Badge,
-} from "@mui/material";
-
-interface ExperienceFormProps {
-  index: number;
-  exp: Experience;
-  errors: ExperienceDetailsError;
-}
+import { Grid, Button, TextField, Typography } from "@mui/material";
 
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;
@@ -37,14 +17,17 @@ const getCurEmp = (state: IAppState) => {
 
 export default function ExperienceForm(props: ExperienceFormProps) {
   let errors = (props.errors as ExperienceDetailsError) || {};
+
   const cur_emp = useSelector(getCurEmp);
+
   const dispatch = useDispatch();
 
   const handleRemoveClcik = useCallback(() => {
     let experience = [...cur_emp.experience];
     experience.splice(props.index, 1);
     dispatch(setEmpData("experience", experience));
-  }, []);
+  }, [cur_emp.experience, dispatch, props.index]);
+
   const handleInput = useCallback(
     (name, value) => {
       let experience = [...cur_emp.experience];
@@ -52,7 +35,7 @@ export default function ExperienceForm(props: ExperienceFormProps) {
       experience[props.index] = cur_exp;
       dispatch(setEmpData("experience", experience));
     },
-    [cur_emp.experience]
+    [cur_emp.experience, dispatch, props.index]
   );
 
   return (
@@ -141,7 +124,6 @@ export default function ExperienceForm(props: ExperienceFormProps) {
                   <>
                     <TextField
                       fullWidth
-                      // helperText={errors.join_date}
                       variant="outlined"
                       size="small"
                       {...params}

@@ -1,4 +1,4 @@
-import produce from "immer";
+import produce from "immer"; //for immutability
 import { AnyAction } from "redux";
 import {
   SET_CUR_PAGE,
@@ -11,29 +11,36 @@ import {
 } from "./actionTypes";
 import { IAppState, Employee } from "./types";
 
+//initial state of app
 const initialState: IAppState = {
   employees: [], //list of employees
   cur_page: "list", //to dicide page
   selected_employee: {} as Employee, //to perform add edit
-  cur_step: 0,
+  cur_step: 0, //if form is open ,indicates the current step
 };
 
 function mainReducer(state: IAppState = initialState, action: AnyAction) {
   switch (action.type) {
     case REMOVE_EMP:
       return produce(state, (draft) => {
-        let index = draft.employees.findIndex((t) => t.id == action.payload);
-        draft.employees.splice(index, 1);
+        //filter all the employees for which id not matched
+        draft.employees = draft.employees.filter(
+          (t) => t.id !== action.payload
+        );
       });
     case UPDATE_EMP:
       return produce(state, (draft) => {
         let id = action.payload.id;
-        let index = draft.employees.findIndex((t) => t.id == id);
-        if (index < 0) index = 0;
-        draft.employees[index] = draft.selected_employee;
+        //find index of employee
+        let index = draft.employees.findIndex((t) => t.id === id);
+        //if index found ,replace old value with new one
+        if (index >= 0) {
+          draft.employees[index] = draft.selected_employee;
+        }
       });
     case ADD_EMP:
       return produce(state, (draft) => {
+        //push new  emp object, in list
         draft.employees.push(action.payload);
       });
     case SET_CUR_PAGE:

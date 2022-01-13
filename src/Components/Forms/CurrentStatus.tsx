@@ -5,19 +5,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { setEmpData } from "../../redux/actions";
 
-import {
-  Grid,
-  Button,
-  Chip,
-  ListItemText,
-  TextField,
-  Paper,
-  Select,
-  Typography,
-  FormLabel,
-  MenuItem,
-  Badge,
-} from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;

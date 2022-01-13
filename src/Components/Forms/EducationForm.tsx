@@ -1,8 +1,5 @@
 import {
-  EmpFormProps,
-  Experience,
   EducationDetailsError,
-  EducationDetailsErrors,
   IAppState,
   EducationDetails,
 } from "../../redux/types";
@@ -12,19 +9,7 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { useCallback } from "react";
-import {
-  Grid,
-  Button,
-  Chip,
-  ListItemText,
-  TextField,
-  Paper,
-  Select,
-  Typography,
-  FormLabel,
-  MenuItem,
-  Badge,
-} from "@mui/material";
+import { Grid, Button, TextField, Typography } from "@mui/material";
 
 interface EducationDetailsProps {
   index: number;
@@ -41,11 +26,11 @@ export default function EducationForm(props: EducationDetailsProps) {
   const cur_emp = useSelector(getCurEmp);
   const dispatch = useDispatch();
 
-  const handleRemoveClcik = () => {
+  const handleRemoveClcik = useCallback(() => {
     let education = [...cur_emp.education];
     education.splice(props.index, 1);
     dispatch(setEmpData("education", education));
-  };
+  }, [dispatch, cur_emp.education, props.index]);
   const handleInput = useCallback(
     (name: string, value: string | Date | null) => {
       let education = [...cur_emp.education];
@@ -53,7 +38,7 @@ export default function EducationForm(props: EducationDetailsProps) {
       education[props.index] = cur_exp;
       dispatch(setEmpData("education", education));
     },
-    [cur_emp.education]
+    [cur_emp.education, dispatch, props.index]
   );
   return (
     <div

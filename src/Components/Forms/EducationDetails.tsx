@@ -4,25 +4,12 @@ import {
   EmpFormProps,
   EducationDetailsErrors,
   IAppState,
-  Experience,
   EducationDetails,
 } from "../../redux/types";
 
 import EducationForm from "./EducationForm";
 
-import {
-  Grid,
-  Button,
-  Chip,
-  ListItemText,
-  TextField,
-  Paper,
-  Select,
-  Typography,
-  FormLabel,
-  MenuItem,
-  Badge,
-} from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { setEmpData } from "../../redux/actions";
 
 const getCurEmp = (state: IAppState) => {
@@ -33,7 +20,13 @@ export default function EducationDetailsPage(props: EmpFormProps) {
   const cur_emp = useSelector(getCurEmp);
   let errors = props.errors as EducationDetailsErrors;
   const dispatch = useDispatch();
-  const handleAddClick = () => {
+  const handleInput = useCallback(
+    (name: string, value: object) => {
+      dispatch(setEmpData(name, value));
+    },
+    [dispatch]
+  );
+  const handleAddClick = useCallback(() => {
     let education: EducationDetails[] = [];
 
     if (cur_emp.education && Array.isArray(cur_emp.education)) {
@@ -41,11 +34,7 @@ export default function EducationDetailsPage(props: EmpFormProps) {
     }
     education.push({} as EducationDetails);
     handleInput("education", education);
-  };
-
-  const handleInput = useCallback((name: string, value: object) => {
-    dispatch(setEmpData(name, value));
-  }, []);
+  }, [cur_emp.education, handleInput]);
 
   return (
     <div
