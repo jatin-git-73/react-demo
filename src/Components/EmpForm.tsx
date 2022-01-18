@@ -11,7 +11,7 @@ import CurrentStatus from "./Forms/CurrentStatus";
 import ExperienceDetails from "./Forms/ExperienceDetails";
 import EducationDetails from "./Forms/EducationDetails";
 import {
-  addEmp,
+  addEmp, 
   setCurEmp,
   setPage,
   setStep,
@@ -65,6 +65,16 @@ const EmpForm = () => {
   //just a counter to reflect useEffect
   const [nextstep, setNextStep] = useState(0);
 
+    //this will always return errors of current step
+    const getErrors = useCallback(() => {
+      let cur_errors = state.errors[cur_step];
+      if (cur_errors === undefined) {
+        //if there is no erros in state,return default errors for given step
+        return getDefaultErrors(cur_step); //by default we assume its not failed
+      }
+      return cur_errors;
+    }, [state.errors, cur_step]);
+
   //we need to  move to next step if nextstep is changed
   useEffect(() => {
     //no next click performed
@@ -92,22 +102,15 @@ const EmpForm = () => {
     setState(new_state);
   }, [state, cur_emp, cur_step]);
 
-  //this will always return errors of current step
-  const getErrors = useCallback(() => {
-    let cur_errors = state.errors[cur_step];
-    if (cur_errors === undefined) {
-      //if there is no erros in state,return default errors for given step
-      return getDefaultErrors(cur_step); //by default we assume its not failed
-    }
-    return cur_errors;
-  }, [state.errors, cur_step]);
 
-  const handleNextClick = () => {
+
+  const handleNextClick = useCallback(() => {
+    console.log("you clicked me");
     if (cur_step < getSteps().length) {
       doValidation();
       setNextStep(nextstep + 1);
     }
-  };
+  },[nextstep,cur_step,doValidation]);
 
   const handleSubmitClick = useCallback(() => {
     doValidation();
@@ -129,24 +132,24 @@ const EmpForm = () => {
       dispatch(setCurEmp({}));
       dispatch(setPage("list"));
     }
-  }, [cur_step, state]);
+  }, [getErrors,cur_emp,dispatch,doValidation,next_id]);
 
   const handlePreviousClick = useCallback(() => {
     if (cur_step === 0) return;
     dispatch(setStep(cur_step - 1));
-  }, [cur_step]);
+  }, [cur_step,dispatch]);
 
   const handleRemove = useCallback(() => {
     if (cur_emp.id > 0) {
       dispatch(removeEmp(cur_emp.id));
     }
-  }, [cur_emp.id]);
+  }, [cur_emp.id,dispatch]);
 
   const hanldeExitClick = useCallback(() => {
     dispatch(setStep(0));
     dispatch(setCurEmp({}));
     dispatch(setPage("list"));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

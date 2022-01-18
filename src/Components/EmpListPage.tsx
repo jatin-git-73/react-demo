@@ -11,7 +11,7 @@ const EmpListPage = () => {
   const showForm = useCallback(
     (emp) => {
       dispatch(setStep(0));
-      dispatch(setCurEmp(emp));
+      dispatch(setCurEmp(emp)); 
       dispatch(setPage("form"));
     },
     [dispatch]

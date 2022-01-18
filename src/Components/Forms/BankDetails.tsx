@@ -5,7 +5,7 @@ import { setEmpData } from "../../redux/actions";
 
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;
-};
+}; 
 
 export default function BankDetails(props: EmpFormProps) {
   const cur_emp = useSelector(getCurEmp);

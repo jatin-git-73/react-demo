@@ -10,7 +10,7 @@ const NoResults = (props: NoresultProps) => {
       "No results found for you query `" +
       search_query +
       "`,try with any other text";
-  }
+  } 
   return (
     <div
       style={{

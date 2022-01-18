@@ -8,12 +8,12 @@ import {
 } from "../../redux/types";
 
 import EducationForm from "./EducationForm";
-
+  
 import { Button, Typography } from "@mui/material";
 import { setEmpData } from "../../redux/actions";
 
 const getCurEmp = (state: IAppState) => {
-  return state.selected_employee;
+  return  state.selected_employee;
 };
 
 export default function EducationDetailsPage(props: EmpFormProps) {

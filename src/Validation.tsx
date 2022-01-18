@@ -5,7 +5,7 @@ import {
   ExperienceDetailsError,
   PersonalDetailsError,
   ProfessionDetailsError,
-  BankDetailsError,
+  BankDetailsError, 
   ValidationError,
   EducationDetailsErrors,
 } from "./redux/types";

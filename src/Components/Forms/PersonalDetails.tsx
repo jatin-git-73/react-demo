@@ -12,7 +12,7 @@ import {
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-
+ 
 const getPhoto = (state: IAppState) => {
   if (state.selected_employee.photo === "") return "images/no-pic.svg";
   return state.selected_employee.photo;

@@ -8,24 +8,21 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPage, setStep, setCurEmp } from "../redux/actions";
-import { Employee, IAppState } from "../redux/types";
+import { useSelector } from "react-redux";
+import {  IAppState } from "../redux/types";
 import NoResults from "./NoResults";
 
 const getEmpList = (state: IAppState) => state.employees;
 
 interface EmpListProps {
   search_query: string;
-  handleEditClick: Function;
+  handleEditClick: Function; 
   handleDeleteClick: Function;
 }
 const EmpList = (props: EmpListProps) => {
-  const dispatch = useDispatch();
   let list = useSelector(getEmpList);
 
-  if (props.search_query != "") {
+  if (props.search_query !== "") {
     list = list.filter(
       (t) =>
         t.first_name.includes(props.search_query) ||
@@ -35,8 +32,8 @@ const EmpList = (props: EmpListProps) => {
         t.department.includes(props.search_query)
     );
   }
-  if (list.length == 0) {
-    //show empty state
+  if (list.length === 0) {
+    //show empty state 
     return (
       <NoResults search_query={props.search_query} result_count={list.length} />
     );

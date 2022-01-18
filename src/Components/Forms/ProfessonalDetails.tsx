@@ -29,7 +29,7 @@ export default function ProfessonalDetails(props: EmpFormProps) {
       dispatch(setEmpData(name, value));
     },
     [dispatch]
-  );
+  ); 
   const handleFileUpload = useCallback(
     (evt) => {
       var files = evt.target.files;

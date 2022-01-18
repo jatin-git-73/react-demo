@@ -31,6 +31,7 @@ export default function EducationForm(props: EducationDetailsProps) {
     education.splice(props.index, 1);
     dispatch(setEmpData("education", education));
   }, [dispatch, cur_emp.education, props.index]);
+  
   const handleInput = useCallback(
     (name: string, value: string | Date | null) => {
       let education = [...cur_emp.education];

@@ -6,7 +6,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { setEmpData } from "../../redux/actions";
 
 import { Grid, TextField, Typography } from "@mui/material";
-
+ 
 const getCurEmp = (state: IAppState) => {
   return state.selected_employee;
 };
