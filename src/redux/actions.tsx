@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   ADD_EMP,
   REMOVE_EMP,
@@ -8,14 +10,18 @@ import {
   UPDATE_EMP,
 } from "./actionTypes";
 
-export function setPage(page: string = "list") {
+export function setPage(
+  page: string = "list"
+) {
   return {
     type: SET_CUR_PAGE,
     payload: page,
   };
 }
 
-export function setStep(step: number = 0) {
+export function setStep(
+  step: number = 0
+) {
   return {
     type: SET_CUR_STEP,
     payload: step,
@@ -29,7 +35,10 @@ export function setCurEmp(emp: object) {
   };
 }
 
-export function setEmpData(name: string, value: any) {
+export function setEmpData(
+  name: string,
+  value: any
+) {
   return {
     type: SET_EMP_DATA,
     payload: {

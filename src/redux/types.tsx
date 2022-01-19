@@ -1,3 +1,5 @@
+/** @format */
+
 export interface EducationDetails {
   course_name: string;
   university_name: string;
@@ -63,7 +65,11 @@ export interface Employee {
   aadhar_number: string;
 }
 
-export type EmployeeNodeVaule = number | string | Date | null;
+export type EmployeeNodeVaule =
+  | number
+  | string
+  | Date
+  | null;
 
 export type pageTypes = "list" | "form";
 export interface IAppState {
@@ -115,6 +121,8 @@ export type ValidationError =
   | BankDetailsError;
 export interface EmpFormProps {
   errors: ValidationError;
+  onChange?: Function;
+  cur_emp?: Employee;
 }
 
 export interface EmpFormState {
@@ -129,4 +137,6 @@ export interface ExperienceFormProps {
   index: number;
   exp: Experience;
   errors: ExperienceDetailsError;
+  onChange?: Function;
+  cur_emp?: Employee;
 }

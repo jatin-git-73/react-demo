@@ -1,45 +1,69 @@
+/** @format */
+
 import {
   EducationDetailsError,
-  IAppState,
   EducationDetails,
+  Employee,
 } from "../../redux/types";
-import { useDispatch, useSelector } from "react-redux";
-import { setEmpData } from "../../redux/actions";
+
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { useCallback } from "react";
-import { Grid, Button, TextField, Typography } from "@mui/material";
+import {
+  Grid,
+  Button,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 interface EducationDetailsProps {
   index: number;
   edu: EducationDetails;
   errors: EducationDetailsError;
+  onChange?: Function;
+  cur_emp?: Employee;
 }
 
-const getCurEmp = (state: IAppState) => {
-  return state.selected_employee;
-};
+export default function EducationForm(
+  props: EducationDetailsProps
+) {
+  let errors =
+    (props.errors as EducationDetailsError) ||
+    {};
+  const cur_emp = props.cur_emp;
 
-export default function EducationForm(props: EducationDetailsProps) {
-  let errors = (props.errors as EducationDetailsError) || {};
-  const cur_emp = useSelector(getCurEmp);
-  const dispatch = useDispatch();
+  const handleRemoveClcik =
+    useCallback(() => {
+      let education = [
+        ...(cur_emp?.education as EducationDetails[]),
+      ];
+      education.splice(props.index, 1);
+      props.onChange?.(
+        "education",
+        education
+      );
+    }, [props, cur_emp?.education]);
 
-  const handleRemoveClcik = useCallback(() => {
-    let education = [...cur_emp.education];
-    education.splice(props.index, 1);
-    dispatch(setEmpData("education", education));
-  }, [dispatch, cur_emp.education, props.index]);
-  
   const handleInput = useCallback(
-    (name: string, value: string | Date | null) => {
-      let education = [...cur_emp.education];
-      let cur_exp = { ...education[props.index], ...{ [name]: value } };
+    (
+      name: string,
+      value: string | Date | null
+    ) => {
+      let education = [
+        ...(cur_emp?.education as EducationDetails[]),
+      ];
+      let cur_exp = {
+        ...education[props.index],
+        ...{ [name]: value },
+      };
       education[props.index] = cur_exp;
-      dispatch(setEmpData("education", education));
+      props.onChange?.(
+        "education",
+        education
+      );
     },
-    [cur_emp.education, dispatch, props.index]
+    [cur_emp?.education, props]
   );
   return (
     <div
@@ -54,18 +78,34 @@ export default function EducationForm(props: EducationDetailsProps) {
         marginTop: "10px",
       }}
     >
-      <Grid justifyContent="space-between" container>
+      <Grid
+        justifyContent="space-between"
+        container
+      >
         <Grid md={5} item>
           <TextField
             fullWidth
             size="small"
-            error={errors.course_name ? true : false}
-            helperText={errors.course_name}
+            error={
+              errors.course_name
+                ? true
+                : false
+            }
+            helperText={
+              errors.course_name
+            }
             label="Course"
             variant="outlined"
-            defaultValue={props.edu.course_name ? props.edu.course_name : ""}
+            defaultValue={
+              props.edu.course_name
+                ? props.edu.course_name
+                : ""
+            }
             onChange={(e) => {
-              handleInput("course_name", e.target.value);
+              handleInput(
+                "course_name",
+                e.target.value
+              );
             }}
           />
         </Grid>
@@ -73,15 +113,27 @@ export default function EducationForm(props: EducationDetailsProps) {
           <TextField
             fullWidth
             size="small"
-            error={errors.university_name ? true : false}
-            helperText={errors.university_name}
+            error={
+              errors.university_name
+                ? true
+                : false
+            }
+            helperText={
+              errors.university_name
+            }
             label="University Name"
             variant="outlined"
             defaultValue={
-              props.edu.university_name ? props.edu.university_name : ""
+              props.edu.university_name
+                ? props.edu
+                    .university_name
+                : ""
             }
             onChange={(e) => {
-              handleInput("university_name", e.target.value);
+              handleInput(
+                "university_name",
+                e.target.value
+              );
             }}
             style={{
               marginBottom: "10px",
@@ -89,12 +141,21 @@ export default function EducationForm(props: EducationDetailsProps) {
           />
         </Grid>
         <Grid md={5} item>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+          >
             <MobileDatePicker
               label="Passed on"
-              value={props.edu.last_date ? props.edu.last_date : new Date()}
+              value={
+                props.edu.last_date
+                  ? props.edu.last_date
+                  : new Date()
+              }
               onChange={(newValue) => {
-                handleInput("last_date", newValue);
+                handleInput(
+                  "last_date",
+                  newValue
+                );
               }}
               renderInput={(params) => {
                 return (
@@ -106,7 +167,11 @@ export default function EducationForm(props: EducationDetailsProps) {
                       variant="outlined"
                       {...params}
                     />
-                    <Typography align="left" color={"red"} variant="caption">
+                    <Typography
+                      align="left"
+                      color={"red"}
+                      variant="caption"
+                    >
                       {errors.last_date}
                     </Typography>
                   </>
@@ -122,16 +187,32 @@ export default function EducationForm(props: EducationDetailsProps) {
             label="Grade"
             variant="outlined"
             onChange={(e) => {
-              handleInput("grade", e.target.value);
+              handleInput(
+                "grade",
+                e.target.value
+              );
             }}
-            defaultValue={props.edu.grade ? props.edu.grade : ""}
-            error={errors.grade ? true : false}
+            defaultValue={
+              props.edu.grade
+                ? props.edu.grade
+                : ""
+            }
+            error={
+              errors.grade
+                ? true
+                : false
+            }
             helperText={errors.grade}
           />
         </Grid>
       </Grid>
 
-      <div style={{ display: "flex", padding: "10px" }}>
+      <div
+        style={{
+          display: "flex",
+          padding: "10px",
+        }}
+      >
         <Button
           variant="contained"
           color="secondary"

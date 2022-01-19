@@ -1,13 +1,19 @@
+/** @format */
+
 import { Paper } from "@mui/material";
 import { useSelector } from "react-redux";
 import EmpForm from "./Components/EmpForm";
 import EmpListPage from "./Components/EmpListPage";
 import { IAppState } from "./redux/types";
 
-const getCurrentPage = (state: IAppState) => state.cur_page;
+const getCurrentPage = (
+  state: IAppState
+) => state.cur_page;
 
 function App() {
-  const cur_page = useSelector(getCurrentPage);
+  const cur_page = useSelector(
+    getCurrentPage
+  );
   let content = null;
   if (cur_page === "list") {
     content = <EmpListPage />;
@@ -18,8 +24,20 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "0px 10% 0px 10% " }}>
-      <Paper style={{ marginTop: "25px", padding: "15px" }}> {content} </Paper>
+    <div
+      style={{
+        padding: "0px 10% 0px 10% ",
+      }}
+    >
+      <Paper
+        style={{
+          marginTop: "25px",
+          padding: "15px",
+        }}
+      >
+        {" "}
+        {content}{" "}
+      </Paper>
     </div>
   );
 }

@@ -1,17 +1,33 @@
-import { Typography, Grid, TextField, Button } from "@mui/material";
-import { useCallback, useState } from "react";
+/** @format */
+
+import {
+  Typography,
+  Grid,
+  TextField,
+  Button,
+} from "@mui/material";
+import {
+  useCallback,
+  useState,
+} from "react";
 import { useDispatch } from "react-redux";
-import { setPage, setStep, setCurEmp, removeEmp } from "../redux/actions";
+import {
+  setPage,
+  setStep,
+  setCurEmp,
+  removeEmp,
+} from "../redux/actions";
 import EmpList from "./EmpList";
 
 const EmpListPage = () => {
   const dispatch = useDispatch();
-  let [search_query, setSearchQuery] = useState("");
+  let [search_query, setSearchQuery] =
+    useState("");
 
   const showForm = useCallback(
     (emp) => {
       dispatch(setStep(0));
-      dispatch(setCurEmp(emp)); 
+      dispatch(setCurEmp(emp));
       dispatch(setPage("form"));
     },
     [dispatch]
@@ -28,17 +44,29 @@ const EmpListPage = () => {
     },
     [dispatch]
   );
-  const handleAddClick = useCallback(() => {
-    let new_emp = { id: 0, date_of_birth: new Date() };
-    showForm(new_emp);
-  }, [showForm]);
+  const handleAddClick =
+    useCallback(() => {
+      let new_emp = {
+        id: 0,
+        date_of_birth: new Date(),
+      };
+      showForm(new_emp);
+    }, [showForm]);
 
   return (
     <>
-      <Typography variant="h4" align="center" component="div" gutterBottom>
+      <Typography
+        variant="h4"
+        align="center"
+        component="div"
+        gutterBottom
+      >
         Albiorix Technology Team
       </Typography>
-      <Grid container justifyContent="space-between">
+      <Grid
+        container
+        justifyContent="space-between"
+      >
         <Grid item md={5}>
           <div
             style={{
@@ -50,8 +78,14 @@ const EmpListPage = () => {
           >
             <TextField
               size="small"
-              defaultValue={search_query}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              defaultValue={
+                search_query
+              }
+              onChange={(e) =>
+                setSearchQuery(
+                  e.target.value
+                )
+              }
               label="Search"
               variant="outlined"
             />
@@ -66,16 +100,25 @@ const EmpListPage = () => {
               padding: "10px",
             }}
           >
-            <Button variant="contained" onClick={handleAddClick}>
+            <Button
+              variant="contained"
+              onClick={handleAddClick}
+            >
               Add
             </Button>
           </div>
         </Grid>
-        <EmpList
-          handleDeleteClick={handleDeleteClick}
-          handleEditClick={handleEditClick}
-          search_query={search_query}
-        />
+        <Grid item md={12}>
+          <EmpList
+            handleDeleteClick={
+              handleDeleteClick
+            }
+            handleEditClick={
+              handleEditClick
+            }
+            search_query={search_query}
+          />
+        </Grid>
       </Grid>
     </>
   );

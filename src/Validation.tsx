@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   CurrentStatusError,
   EducationDetailsError,
@@ -5,55 +7,85 @@ import {
   ExperienceDetailsError,
   PersonalDetailsError,
   ProfessionDetailsError,
-  BankDetailsError, 
+  BankDetailsError,
   ValidationError,
   EducationDetailsErrors,
 } from "./redux/types";
 function validateEmail(email: string) {
-  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+    email
+  );
 }
 
-function validatePanCard(pan_number: string) {
-  var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+function validatePanCard(
+  pan_number: string
+) {
+  var regpan =
+    /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
   return regpan.test(pan_number);
 }
 
-function validateEducation(cur_emp: Employee) {
+function validateEducation(
+  cur_emp: Employee
+) {
   let errors: EducationDetailsErrors = {
     failed: false,
     education: [],
   };
 
-  if (cur_emp.education !== undefined && Array.isArray(cur_emp.education)) {
-    for (let i = 0; i < cur_emp.education.length; i++) {
-      let cur_edu = cur_emp.education[i];
-      let cur_errors: EducationDetailsError = {
-        course_name: "",
-        university_name: "",
-        grade: "",
-        last_date: "",
-        failed: false,
-      };
-      if (cur_edu.course_name === undefined || cur_edu.course_name === "") {
-        cur_errors.course_name = "Please enter course name";
+  if (
+    cur_emp.education !== undefined &&
+    Array.isArray(cur_emp.education)
+  ) {
+    for (
+      let i = 0;
+      i < cur_emp.education.length;
+      i++
+    ) {
+      let cur_edu =
+        cur_emp.education[i];
+      let cur_errors: EducationDetailsError =
+        {
+          course_name: "",
+          university_name: "",
+          grade: "",
+          last_date: "",
+          failed: false,
+        };
+      if (
+        cur_edu.course_name ===
+          undefined ||
+        cur_edu.course_name === ""
+      ) {
+        cur_errors.course_name =
+          "Please enter course name";
         cur_errors.failed = true;
         errors.failed = true;
       }
       if (
-        cur_edu.university_name === undefined ||
+        cur_edu.university_name ===
+          undefined ||
         cur_edu.university_name === ""
       ) {
-        cur_errors.university_name = "Please enter university name";
+        cur_errors.university_name =
+          "Please enter university name";
         cur_errors.failed = true;
         errors.failed = true;
       }
-      if (cur_edu.grade === undefined || cur_edu.grade === "") {
-        cur_errors.grade = "Please enter grade";
+      if (
+        cur_edu.grade === undefined ||
+        cur_edu.grade === ""
+      ) {
+        cur_errors.grade =
+          "Please enter grade";
         cur_errors.failed = true;
         errors.failed = true;
       }
-      if (cur_edu.last_date === undefined) {
-        cur_errors.last_date = "Please select last date";
+      if (
+        cur_edu.last_date === undefined
+      ) {
+        cur_errors.last_date =
+          "Please select last date";
         cur_errors.failed = true;
         errors.failed = true;
       }
@@ -64,7 +96,9 @@ function validateEducation(cur_emp: Employee) {
   return errors;
 }
 
-function validateExperience(cur_emp: Employee) {
+function validateExperience(
+  cur_emp: Employee
+) {
   let errors: {
     failed: boolean;
     experience: ExperienceDetailsError[];
@@ -73,62 +107,98 @@ function validateExperience(cur_emp: Employee) {
     experience: [],
   };
 
-  if (cur_emp.experience !== undefined && Array.isArray(cur_emp.experience)) {
-    for (let i = 0; i < cur_emp.experience.length; i++) {
-      let cur_exp = cur_emp.experience[i];
-      let cur_errors: ExperienceDetailsError = {
-        failed: false,
-        company_name: "",
-        designation: "",
-        department: "",
-        ctc: "",
-        join_date: "",
-        last_date: "",
-      };
+  if (
+    cur_emp.experience !== undefined &&
+    Array.isArray(cur_emp.experience)
+  ) {
+    for (
+      let i = 0;
+      i < cur_emp.experience.length;
+      i++
+    ) {
+      let cur_exp =
+        cur_emp.experience[i];
+      let cur_errors: ExperienceDetailsError =
+        {
+          failed: false,
+          company_name: "",
+          designation: "",
+          department: "",
+          ctc: "",
+          join_date: "",
+          last_date: "",
+        };
 
-      if (cur_exp.company_name === undefined || cur_exp.company_name === "") {
-        cur_errors.company_name = "Please enter company name";
+      if (
+        cur_exp.company_name ===
+          undefined ||
+        cur_exp.company_name === ""
+      ) {
+        cur_errors.company_name =
+          "Please enter company name";
         cur_errors.failed = true;
         errors.failed = true;
       }
-      if (cur_exp.designation === undefined || cur_exp.designation === "") {
-        cur_errors.designation = "Please enter designation";
+      if (
+        cur_exp.designation ===
+          undefined ||
+        cur_exp.designation === ""
+      ) {
+        cur_errors.designation =
+          "Please enter designation";
         cur_errors.failed = true;
         errors.failed = true;
       }
-      if (cur_exp.department === undefined || cur_exp.department === "") {
-        cur_errors.department = "Please enter department";
+      if (
+        cur_exp.department ===
+          undefined ||
+        cur_exp.department === ""
+      ) {
+        cur_errors.department =
+          "Please enter department";
         cur_errors.failed = true;
         errors.failed = true;
       }
       if (cur_exp.ctc === undefined) {
-        cur_errors.ctc = "Please enter ctc";
+        cur_errors.ctc =
+          "Please enter ctc";
         cur_errors.failed = true;
         errors.failed = true;
       } else if (isNaN(cur_exp.ctc)) {
-        cur_errors.ctc = "Please enter valid ctc";
+        cur_errors.ctc =
+          "Please enter valid ctc";
         cur_errors.failed = true;
         errors.failed = true;
       }
 
-      if (cur_exp.join_date === undefined) {
-        cur_errors.join_date = "Please select join date";
+      if (
+        cur_exp.join_date === undefined
+      ) {
+        cur_errors.join_date =
+          "Please select join date";
         cur_errors.failed = true;
         errors.failed = true;
       }
-      if (cur_exp.last_date === undefined) {
-        cur_errors.last_date = "Please select last date";
+      if (
+        cur_exp.last_date === undefined
+      ) {
+        cur_errors.last_date =
+          "Please select last date";
         cur_errors.failed = true;
         errors.failed = true;
       }
-      errors.experience.push(cur_errors);
+      errors.experience.push(
+        cur_errors
+      );
     }
   }
 
   return errors;
 }
 
-function validateCurrentStatus(cur_emp: Employee) {
+function validateCurrentStatus(
+  cur_emp: Employee
+) {
   let errors: CurrentStatusError = {
     failed: false,
     company_name: "",
@@ -138,34 +208,51 @@ function validateCurrentStatus(cur_emp: Employee) {
     join_date: "",
   };
 
-  if (cur_emp.company_name === undefined || cur_emp.company_name === "") {
-    errors.company_name = "Please enter company name";
+  if (
+    cur_emp.company_name ===
+      undefined ||
+    cur_emp.company_name === ""
+  ) {
+    errors.company_name =
+      "Please enter company name";
     errors.failed = true;
   }
-  if (cur_emp.designation === undefined || cur_emp.designation === "") {
-    errors.designation = "Please enter designation";
+  if (
+    cur_emp.designation === undefined ||
+    cur_emp.designation === ""
+  ) {
+    errors.designation =
+      "Please enter designation";
     errors.failed = true;
   }
-  if (cur_emp.department === undefined || cur_emp.department === "") {
-    errors.department = "Please enter department";
+  if (
+    cur_emp.department === undefined ||
+    cur_emp.department === ""
+  ) {
+    errors.department =
+      "Please enter department";
     errors.failed = true;
   }
   if (cur_emp.ctc === undefined) {
     errors.ctc = "Please enter ctc";
     errors.failed = true;
   } else if (isNaN(cur_emp.ctc)) {
-    errors.ctc = "Please enter valid ctc";
+    errors.ctc =
+      "Please enter valid ctc";
     errors.failed = true;
   }
 
   if (cur_emp.join_date === undefined) {
-    errors.join_date = "Please select join date";
+    errors.join_date =
+      "Please select join date";
     errors.failed = true;
   }
   return errors;
 }
 
-function validateProfessionalDetails(cur_emp: Employee) {
+function validateProfessionalDetails(
+  cur_emp: Employee
+) {
   let errors: ProfessionDetailsError = {
     failed: false,
     exp_year: "",
@@ -174,21 +261,29 @@ function validateProfessionalDetails(cur_emp: Employee) {
   };
 
   if (cur_emp.exp_year === undefined) {
-    errors.exp_year = "Please enter years";
+    errors.exp_year =
+      "Please enter years";
     errors.failed = true;
   }
   if (cur_emp.exp_month === undefined) {
-    errors.exp_month = "Please enter month";
+    errors.exp_month =
+      "Please enter month";
     errors.failed = true;
   }
-  if (cur_emp.skills === undefined || cur_emp.skills.length === 0) {
-    errors.skills = "Please select one skill";
+  if (
+    cur_emp.skills === undefined ||
+    cur_emp.skills.length === 0
+  ) {
+    errors.skills =
+      "Please select one skill";
     errors.failed = true;
   }
   return errors;
 }
 
-function validatePersonalDetails(cur_emp: Employee) {
+function validatePersonalDetails(
+  cur_emp: Employee
+) {
   let errors: PersonalDetailsError = {
     failed: false,
     first_name: "",
@@ -198,54 +293,83 @@ function validatePersonalDetails(cur_emp: Employee) {
     phone: "",
   };
 
-  if (cur_emp.first_name === undefined) {
-    errors.first_name = "Please enter first name";
+  if (
+    cur_emp.first_name === undefined
+  ) {
+    errors.first_name =
+      "Please enter first name";
     errors.failed = true;
-  } else if (cur_emp.first_name.length < 5) {
-    errors.first_name = "First name must be 5 characters long";
+  } else if (
+    cur_emp.first_name.length < 5
+  ) {
+    errors.first_name =
+      "First name must be 5 characters long";
     errors.failed = true;
   }
   if (cur_emp.last_name === undefined) {
-    errors.last_name = "Please enter last name";
+    errors.last_name =
+      "Please enter last name";
     errors.failed = true;
-  } else if (cur_emp.last_name.length < 5) {
-    errors.last_name = "Last name must be 5 characters long";
+  } else if (
+    cur_emp.last_name.length < 5
+  ) {
+    errors.last_name =
+      "Last name must be 5 characters long";
     errors.failed = true;
   }
   //validate date,emp must be 18 + old
-  if (cur_emp.date_of_birth !== undefined) {
+  if (
+    cur_emp.date_of_birth !== undefined
+  ) {
     let today = new Date();
     //since we are storng date object in dob ,we dont need to parse it
-    let age = today.getFullYear() - cur_emp.date_of_birth.getFullYear();
+    let age =
+      today.getFullYear() -
+      cur_emp.date_of_birth.getFullYear();
     if (age < 18) {
-      errors.date_of_birth = "Invalide date, employee age must be >=18 years";
+      errors.date_of_birth =
+        "Invalide date, employee age must be >=18 years";
       errors.failed = true;
     }
   } else {
-    errors.date_of_birth = "Please select Date of birth";
+    errors.date_of_birth =
+      "Please select Date of birth";
+    errors.failed = true;
   }
-  if (cur_emp.phone !== undefined && cur_emp.phone !== "") {
+  if (
+    cur_emp.phone !== undefined &&
+    cur_emp.phone !== ""
+  ) {
     //when phone is given,validate phone
     if (
       cur_emp.phone.length === 0 ||
       cur_emp.phone.length < 10 ||
       isNaN(+cur_emp.phone)
     ) {
-      errors.phone = "Invalid phone number";
+      errors.phone =
+        "Invalid phone number";
       errors.failed = true;
     }
   } else {
     //when phone is not given,validate email
-    if (cur_emp.email === undefined || cur_emp.email.length === 0) {
+    if (
+      cur_emp.email === undefined ||
+      cur_emp.email.length === 0
+    ) {
       //email is not given
-      errors.email = "Either phone or email is required";
-      errors.phone = "Either phone or email is required";
+      errors.email =
+        "Either phone or email is required";
+      errors.phone =
+        "Either phone or email is required";
       errors.failed = true;
     } else {
       //email is given check for email format
-      if (!validateEmail(cur_emp.email)) {
+      if (
+        !validateEmail(cur_emp.email)
+      ) {
         //email is not valid
-        errors.email = "Invalid email address";
+        errors.email =
+          "Invalid email address";
         errors.failed = true;
       }
     }
@@ -253,7 +377,9 @@ function validatePersonalDetails(cur_emp: Employee) {
   return errors;
 }
 
-function validateBankDetails(cur_emp: Employee) {
+function validateBankDetails(
+  cur_emp: Employee
+) {
   let errors: BankDetailsError = {
     failed: false,
     account_number: "",
@@ -263,67 +389,88 @@ function validateBankDetails(cur_emp: Employee) {
   };
 
   if (
-    cur_emp.account_number === undefined ||
+    cur_emp.account_number ===
+      undefined ||
     cur_emp.account_number.length === 0
   ) {
-    errors.account_number = "Please enter bank account number";
-    errors.failed = true;
-  }
-
-  if (cur_emp.ifsc_code === undefined || cur_emp.ifsc_code.length === 0) {
-    errors.ifsc_code = "Please enter IFSC Code";
-    errors.failed = true;
-  }
-
-  if (cur_emp.pan_number === undefined || cur_emp.pan_number.length === 0) {
-    errors.pan_number = "Please enter PAN Card Number";
-    errors.failed = true;
-  } else if (!validatePanCard(cur_emp.pan_number)) {
-    errors.pan_number = "Please enter valid PAN Card Number";
+    errors.account_number =
+      "Please enter bank account number";
     errors.failed = true;
   }
 
   if (
-    cur_emp.aadhar_number === undefined ||
+    cur_emp.ifsc_code === undefined ||
+    cur_emp.ifsc_code.length === 0
+  ) {
+    errors.ifsc_code =
+      "Please enter IFSC Code";
+    errors.failed = true;
+  }
+
+  if (
+    cur_emp.pan_number === undefined ||
+    cur_emp.pan_number.length === 0
+  ) {
+    errors.pan_number =
+      "Please enter PAN Card Number";
+    errors.failed = true;
+  } else if (
+    !validatePanCard(cur_emp.pan_number)
+  ) {
+    errors.pan_number =
+      "Please enter valid PAN Card Number";
+    errors.failed = true;
+  }
+
+  if (
+    cur_emp.aadhar_number ===
+      undefined ||
     cur_emp.aadhar_number.length === 0
   ) {
-    errors.aadhar_number = "Please enter Aadhar Number";
+    errors.aadhar_number =
+      "Please enter Aadhar Number";
     errors.failed = true;
   } else if (
     isNaN(+cur_emp.aadhar_number) ||
     cur_emp.aadhar_number.length < 12
   ) {
-    errors.aadhar_number = "Please enter valid Aadhar Number";
+    errors.aadhar_number =
+      "Please enter valid Aadhar Number";
     errors.failed = true;
   }
   return errors;
 }
 
-export function getDefaultErrors(cur_step: number): ValidationError {
-  let default_personal_details_error: PersonalDetailsError = {
-    failed: false,
-    first_name: "",
-    last_name: "",
-    date_of_birth: "",
-    email: "",
-    phone: "",
-  };
+export function getDefaultErrors(
+  cur_step: number
+): ValidationError {
+  let default_personal_details_error: PersonalDetailsError =
+    {
+      failed: false,
+      first_name: "",
+      last_name: "",
+      date_of_birth: "",
+      email: "",
+      phone: "",
+    };
 
-  let default_professionalDetails_error: ProfessionDetailsError = {
-    failed: false,
-    exp_year: "",
-    exp_month: "",
-    skills: "",
-  };
+  let default_professionalDetails_error: ProfessionDetailsError =
+    {
+      failed: false,
+      exp_year: "",
+      exp_month: "",
+      skills: "",
+    };
 
-  let default_current_status_error: CurrentStatusError = {
-    failed: false,
-    company_name: "",
-    designation: "",
-    department: "",
-    ctc: "",
-    join_date: "",
-  };
+  let default_current_status_error: CurrentStatusError =
+    {
+      failed: false,
+      company_name: "",
+      designation: "",
+      department: "",
+      ctc: "",
+      join_date: "",
+    };
 
   let default_experience_error: {
     failed: boolean;
@@ -341,13 +488,14 @@ export function getDefaultErrors(cur_step: number): ValidationError {
     education: [],
   };
 
-  let default_bank_details_errors: BankDetailsError = {
-    failed: false,
-    account_number: "",
-    ifsc_code: "",
-    pan_number: "",
-    aadhar_number: "",
-  };
+  let default_bank_details_errors: BankDetailsError =
+    {
+      failed: false,
+      account_number: "",
+      ifsc_code: "",
+      pan_number: "",
+      aadhar_number: "",
+    };
 
   let default_errors = [
     default_personal_details_error,
@@ -360,7 +508,10 @@ export function getDefaultErrors(cur_step: number): ValidationError {
   return default_errors[cur_step];
 }
 
-export default function validate(cur_emp: Employee, step = 0): ValidationError {
+export default function validate(
+  cur_emp: Employee,
+  step = 0
+): ValidationError {
   let validators = [
     validatePersonalDetails,
     validateBankDetails,
@@ -370,7 +521,9 @@ export default function validate(cur_emp: Employee, step = 0): ValidationError {
     validateEducation,
   ];
   if (validators[step] === undefined) {
-    throw Error("Invalid step :" + step);
+    throw Error(
+      "Invalid step :" + step
+    );
   }
   return validators[step](cur_emp);
 }
