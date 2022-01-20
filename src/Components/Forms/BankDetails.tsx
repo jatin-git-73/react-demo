@@ -1,22 +1,34 @@
+/** @format */
+
 import {
-  ValidationError,
-  IAppState,
   BankDetailsError,
   EmpFormProps,
+  EmployeeNodeVaule,
 } from "../../redux/types";
-import { useDispatch, useSelector } from "react-redux";
-import { Typography, FormLabel, TextField, Grid } from "@mui/material";
-import { setEmpData } from "../../redux/actions";
+import {
+  Typography,
+  TextField,
+  Grid,
+} from "@mui/material";
+import { useCallback } from "react";
 
-const getCurEmp = (state: IAppState) => {
-  return state.selected_employee;
-};
+export default function BankDetails(
+  props: EmpFormProps
+) {
+  const cur_emp = props.cur_emp;
 
-export default function (props: EmpFormProps) {
-  const cur_emp = useSelector(getCurEmp);
-  const dispatch = useDispatch();
+  const handleInput = useCallback(
+    (
+      name: string,
+      value: EmployeeNodeVaule
+    ) => {
+      props.onChange?.(name, value);
+    },
+    [props]
+  );
 
-  let errors = props.errors as BankDetailsError;
+  let errors =
+    props.errors as BankDetailsError;
   return (
     <div
       style={{
@@ -29,34 +41,63 @@ export default function (props: EmpFormProps) {
       }}
     >
       <div>
-        <Typography variant="h5">Bank Details</Typography>
+        <Typography variant="h5">
+          Bank Details
+        </Typography>
       </div>
-      <Grid container direction="row" justifyContent="space-between">
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+      >
         <Grid item md={5}>
           <TextField
             fullWidth
             size="small"
-            error={errors.account_number !== ""}
-            helperText={errors.account_number}
+            error={
+              errors.account_number !==
+              ""
+            }
+            helperText={
+              errors.account_number
+            }
             label="Account Number"
             variant="outlined"
-            defaultValue={cur_emp.account_number ? cur_emp.account_number : ""}
+            defaultValue={
+              cur_emp?.account_number
+                ? cur_emp?.account_number
+                : ""
+            }
             onChange={(e) => {
-              dispatch(setEmpData("account_number", e.target.value));
+              handleInput(
+                "account_number",
+                e.target.value
+              );
             }}
           />
         </Grid>
         <Grid item md={5}>
           <TextField
             fullWidth
-            error={errors.ifsc_code !== ""}
-            helperText={errors.ifsc_code}
+            error={
+              errors.ifsc_code !== ""
+            }
+            helperText={
+              errors.ifsc_code
+            }
             label="IFSC Code"
             size="small"
             variant="outlined"
-            defaultValue={cur_emp.ifsc_code ? cur_emp.ifsc_code : ""}
+            defaultValue={
+              cur_emp?.ifsc_code
+                ? cur_emp?.ifsc_code
+                : ""
+            }
             onChange={(e) => {
-              dispatch(setEmpData("ifsc_code", e.target.value));
+              handleInput(
+                "ifsc_code",
+                e.target.value
+              );
             }}
             style={{
               marginBottom: "10px",
@@ -66,15 +107,26 @@ export default function (props: EmpFormProps) {
         <Grid item md={5}>
           <TextField
             fullWidth
-            error={errors.pan_number !== ""}
-            helperText={errors.pan_number}
+            error={
+              errors.pan_number !== ""
+            }
+            helperText={
+              errors.pan_number
+            }
             inputProps={{
               maxLength: 10,
             }}
             onChange={(e) => {
-              dispatch(setEmpData("pan_number", e.target.value));
+              handleInput(
+                "pan_number",
+                e.target.value
+              );
             }}
-            defaultValue={cur_emp.pan_number ? cur_emp.pan_number : ""}
+            defaultValue={
+              cur_emp?.pan_number
+                ? cur_emp?.pan_number
+                : ""
+            }
             label="PAN Card Number"
             variant="outlined"
             size="small"
@@ -87,14 +139,26 @@ export default function (props: EmpFormProps) {
             variant="outlined"
             size="small"
             onChange={(e) => {
-              dispatch(setEmpData("aadhar_number", e.target.value));
+              handleInput(
+                "aadhar_number",
+                e.target.value
+              );
             }}
             inputProps={{
               maxLength: 12,
             }}
-            defaultValue={cur_emp.aadhar_number ? cur_emp.aadhar_number : ""}
-            error={errors.aadhar_number !== ""}
-            helperText={errors.aadhar_number}
+            defaultValue={
+              cur_emp?.aadhar_number
+                ? cur_emp?.aadhar_number
+                : ""
+            }
+            error={
+              errors.aadhar_number !==
+              ""
+            }
+            helperText={
+              errors.aadhar_number
+            }
           />
         </Grid>
       </Grid>

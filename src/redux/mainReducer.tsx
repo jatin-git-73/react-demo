@@ -1,6 +1,7 @@
-import produce from "immer";
+/** @format */
+
+import produce from "immer"; //for immutability
 import { AnyAction } from "redux";
-import createSagaMiddleware from "redux-saga";
 import {
   SET_CUR_PAGE,
   SET_CUR_STEP,
@@ -10,37 +11,61 @@ import {
   UPDATE_EMP,
   REMOVE_EMP,
   SET_EMP_LIST,
+  DELETE_EMP,
 } from "./actionTypes";
-import { IAppState, Employee } from "./types";
+import {
+  IAppState,
+  Employee,
+} from "./types";
 
+//initial state of app
 const initialState: IAppState = {
   employees: [], //list of employees
   cur_page: "list", //to dicide page
   selected_employee: {} as Employee, //to perform add edit
-  cur_step: 0,
+  cur_step: 0, //if form is open ,indicates the current step
 };
 
-function mainReducer(state: IAppState = initialState, action: AnyAction) {
+function mainReducer(
+  state: IAppState = initialState,
+  action: AnyAction
+) {
   switch (action.type) {
     case SET_EMP_LIST:
       return produce(state, (draft) => {
-        draft.employees = action.payload;
+        draft.employees =
+          action.payload;
       });
-    case REMOVE_EMP:
+    case DELETE_EMP:
       return produce(state, (draft) => {
-        let index = draft.employees.findIndex((t) => t.id == action.payload);
-        draft.employees.splice(index, 1);
+        //filter all the employees for which id not matched
+        draft.employees =
+          draft.employees.filter(
+            (t) =>
+              t.id !== action.payload
+          );
       });
     case UPDATE_EMP:
       return produce(state, (draft) => {
         let id = action.payload.id;
-        let index = draft.employees.findIndex((t) => t.id == id);
-        if (index < 0) index = 0;
-        draft.employees[index] = draft.selected_employee;
+        //find index of employee
+        let index =
+          draft.employees.findIndex(
+            (t) => t.id === id
+          );
+        //if index found ,replace old value with new one
+        if (index >= 0) {
+          draft.employees[index] = {
+            ...action.payload,
+          };
+        }
       });
     case ADD_EMP:
       return produce(state, (draft) => {
-        draft.employees.push(action.payload);
+        //push new  emp object, in list
+        draft.employees.push(
+          action.payload
+        );
       });
     case SET_CUR_PAGE:
       return produce(state, (draft) => {
@@ -52,12 +77,15 @@ function mainReducer(state: IAppState = initialState, action: AnyAction) {
       });
     case SET_SELECTED_EMP:
       return produce(state, (draft) => {
-        draft.selected_employee = action.payload;
+        draft.selected_employee =
+          action.payload;
       });
 
     case SET_EMP_DATA:
       return produce(state, (draft) => {
-        (draft.selected_employee as any)[action.payload.name] =
+        (
+          draft.selected_employee as any
+        )[action.payload.name] =
           action.payload.value;
       });
   }

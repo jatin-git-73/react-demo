@@ -1,5 +1,7 @@
+/** @format */
+
 const express = require("express");
-const bodyParser = require("body-parser");
+
 const cors = require("cors");
 const app = express();
 app.use(express.json());
@@ -38,6 +40,7 @@ app.post("/add", (req, res) => {
 
 //update emp to list
 app.post("/update", (req, res) => {
+  console.log("updaete is called");
   let status = "okay";
   let message = "";
   let index = "index";
@@ -46,7 +49,9 @@ app.post("/update", (req, res) => {
     req.body.emp.id >= 0 &&
     emp_list.length > 0
   ) {
-    index = emp_list.findIndex((t) => t.id == req.body.emp.id);
+    index = emp_list.findIndex(
+      (t) => t.id == req.body.emp.id
+    );
     // emp_list.splice(index, 1, req.body.emp);
     emp_list[index] = req.body.emp;
     message = "updated";
@@ -66,8 +71,14 @@ app.post("/update", (req, res) => {
 app.post("/delete", (req, res) => {
   let status = "okay";
   let message = "";
-  if (req.body.id !== undefined && req.body.id >= 0 && emp_list.length > 0) {
-    let index = emp_list.findIndex((t) => t.id == req.id);
+  if (
+    req.body.id !== undefined &&
+    req.body.id >= 0 &&
+    emp_list.length > 0
+  ) {
+    let index = emp_list.findIndex(
+      (t) => t.id == req.id
+    );
     emp_list.splice(index, 1);
     message = "deleted";
   } else {
@@ -81,5 +92,7 @@ app.post("/delete", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(
+    `Example app listening at http://localhost:${port}`
+  );
 });

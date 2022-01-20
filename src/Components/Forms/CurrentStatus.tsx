@@ -1,31 +1,33 @@
-import { CurrentStatusError, EmpFormProps, IAppState } from "../../redux/types";
-import { useDispatch, useSelector } from "react-redux";
+/** @format */
+
+import {
+  CurrentStatusError,
+  EmpFormProps,
+} from "../../redux/types";
+
+import { useCallback } from "react";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { setEmpData } from "../../redux/actions";
 
 import {
   Grid,
-  Button,
-  Chip,
-  ListItemText,
   TextField,
-  Paper,
-  Select,
   Typography,
-  FormLabel,
-  MenuItem,
-  Badge,
 } from "@mui/material";
 
-const getCurEmp = (state: IAppState) => {
-  return state.selected_employee;
-};
-export default function CurrentStatus(props: EmpFormProps) {
-  const cur_emp = useSelector(getCurEmp);
-  let errors = props.errors as CurrentStatusError;
-  const dispatch = useDispatch();
+export default function CurrentStatus(
+  props: EmpFormProps
+) {
+  const cur_emp = props.cur_emp;
+  const handleInput = useCallback(
+    (name, value) => {
+      props.onChange?.(name, value);
+    },
+    [props]
+  );
+  let errors =
+    props.errors as CurrentStatusError;
   return (
     <div
       style={{
@@ -38,20 +40,37 @@ export default function CurrentStatus(props: EmpFormProps) {
       }}
     >
       <div>
-        <Typography variant="h5">Current Status</Typography>
+        <Typography variant="h5">
+          Current Status
+        </Typography>
       </div>
-      <Grid container justifyContent="space-between" flexDirection="row">
+      <Grid
+        container
+        justifyContent="space-between"
+        flexDirection="row"
+      >
         <Grid item md={5}>
           <TextField
             size="small"
             fullWidth
-            error={errors.company_name !== ""}
-            helperText={errors.company_name}
+            error={
+              errors.company_name !== ""
+            }
+            helperText={
+              errors.company_name
+            }
             label="Company"
             variant="outlined"
-            defaultValue={cur_emp.company_name ? cur_emp.company_name : ""}
+            defaultValue={
+              cur_emp?.company_name
+                ? cur_emp?.company_name
+                : ""
+            }
             onChange={(e) => {
-              dispatch(setEmpData("company_name", e.target.value));
+              handleInput(
+                "company_name",
+                e.target.value
+              );
             }}
           />
         </Grid>
@@ -59,13 +78,24 @@ export default function CurrentStatus(props: EmpFormProps) {
           <TextField
             size="small"
             fullWidth
-            error={errors.designation !== ""}
-            helperText={errors.designation}
+            error={
+              errors.designation !== ""
+            }
+            helperText={
+              errors.designation
+            }
             label="Designation"
             variant="outlined"
-            defaultValue={cur_emp.designation ? cur_emp.designation : ""}
+            defaultValue={
+              cur_emp?.designation
+                ? cur_emp?.designation
+                : ""
+            }
             onChange={(e) => {
-              dispatch(setEmpData("designation", e.target.value));
+              handleInput(
+                "designation",
+                e.target.value
+              );
             }}
             style={{
               marginBottom: "10px",
@@ -76,12 +106,23 @@ export default function CurrentStatus(props: EmpFormProps) {
           <TextField
             size="small"
             fullWidth
-            error={errors.department !== ""}
-            helperText={errors.department}
+            error={
+              errors.department !== ""
+            }
+            helperText={
+              errors.department
+            }
             onChange={(e) => {
-              dispatch(setEmpData("department", e.target.value));
+              handleInput(
+                "department",
+                e.target.value
+              );
             }}
-            defaultValue={cur_emp.department ? cur_emp.department : ""}
+            defaultValue={
+              cur_emp?.department
+                ? cur_emp?.department
+                : ""
+            }
             label="Department"
             variant="outlined"
           />
@@ -93,20 +134,40 @@ export default function CurrentStatus(props: EmpFormProps) {
             label="CTC"
             variant="outlined"
             onChange={(e) => {
-              dispatch(setEmpData("ctc", e.target.value));
+              handleInput(
+                "ctc",
+                e.target.value
+              );
             }}
-            defaultValue={cur_emp.ctc ? cur_emp.ctc : ""}
+            defaultValue={
+              cur_emp?.ctc
+                ? cur_emp?.ctc
+                : ""
+            }
             error={errors.ctc !== ""}
             helperText={errors.ctc}
           />
         </Grid>
-        <Grid item md={5} style={{ marginTop: "10px" }}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Grid
+          item
+          md={5}
+          style={{ marginTop: "10px" }}
+        >
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+          >
             <MobileDatePicker
               label="Working from"
-              value={cur_emp.join_date ? cur_emp.join_date : new Date()}
+              value={
+                cur_emp?.join_date
+                  ? cur_emp?.join_date
+                  : new Date()
+              }
               onChange={(newValue) => {
-                dispatch(setEmpData("join_date", newValue));
+                handleInput(
+                  "join_date",
+                  newValue
+                );
               }}
               renderInput={(params) => {
                 return (
@@ -114,11 +175,14 @@ export default function CurrentStatus(props: EmpFormProps) {
                     <TextField
                       size="small"
                       fullWidth
-                      // helperText={errors.join_date}
                       variant="outlined"
                       {...params}
                     />
-                    <Typography align="left" color={"red"} variant="caption">
+                    <Typography
+                      align="left"
+                      color={"red"}
+                      variant="caption"
+                    >
                       {errors.join_date}
                     </Typography>
                   </>
