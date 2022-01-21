@@ -68,14 +68,7 @@ const EmpListPage = () => {
         justifyContent="space-between"
       >
         <Grid item md={5}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "start",
-              padding: "10px",
-            }}
-          >
+          <div className="Emp-SearchBox-Container">
             <TextField
               size="small"
               defaultValue={
@@ -92,14 +85,7 @@ const EmpListPage = () => {
           </div>
         </Grid>
         <Grid item md={1}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "end",
-              padding: "10px",
-            }}
-          >
+          <div className="Emp-Add-Button-Container">
             <Button
               variant="contained"
               onClick={handleAddClick}

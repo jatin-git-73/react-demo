@@ -77,16 +77,7 @@ const PersonalDetails = (
     props.errors as PersonalDetailsError;
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-          flexDirection: "column",
-          padding: "10px",
-          textAlign: "center",
-        }}
-      >
+      <div className="Personal-Details-Page">
         <div>
           <Typography variant="h5">
             Personal Details
@@ -97,15 +88,7 @@ const PersonalDetails = (
             Profile picture
           </FormLabel>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "15px",
-          }}
-        >
+        <div className="Profile-Pic-Container">
           <img
             width="200"
             src={photo}
@@ -169,13 +152,15 @@ const PersonalDetails = (
                   e.target.value
                 );
               }}
-              style={{
-                marginBottom: "10px",
-              }}
+              className="Margin-Bottom"
             />
           </Grid>
 
-          <Grid item md={5}>
+          <Grid
+            item
+            md={5}
+            className="Margin-Top"
+          >
             <TextField
               fullWidth
               size="small"
@@ -201,7 +186,11 @@ const PersonalDetails = (
               variant="outlined"
             />
           </Grid>
-          <Grid item md={5}>
+          <Grid
+            item
+            md={5}
+            className="Margin-Top"
+          >
             <TextField
               fullWidth
               label="Email"
@@ -227,9 +216,7 @@ const PersonalDetails = (
           <Grid
             item
             md={5}
-            style={{
-              marginTop: "10px",
-            }}
+            className="Margin-Top"
           >
             <LocalizationProvider
               dateAdapter={

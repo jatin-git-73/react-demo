@@ -51,16 +51,7 @@ export default function EducationDetailsPage(
     ]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-      }}
-    >
+    <div className="Education-Details-Page">
       <div>
         <Typography variant="h5">
           {" "}

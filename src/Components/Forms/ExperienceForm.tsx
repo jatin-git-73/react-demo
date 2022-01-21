@@ -57,18 +57,7 @@ export default function ExperienceForm(
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-        border: "1px solid lightgray",
-        marginTop: "10px",
-      }}
-    >
+    <div className="Experience-Details-Form">
       <Grid
         container
         justifyContent={"space-between"}
@@ -125,9 +114,7 @@ export default function ExperienceForm(
                 e.target.value
               );
             }}
-            style={{
-              marginBottom: "10px",
-            }}
+            className="Margin-Bottom"
           />
         </Grid>
         <Grid item md={5}>
@@ -183,7 +170,7 @@ export default function ExperienceForm(
         <Grid
           item
           md={5}
-          style={{ marginTop: "10px" }}
+          className="Margin-Top"
         >
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
@@ -226,7 +213,7 @@ export default function ExperienceForm(
         <Grid
           item
           md={5}
-          style={{ marginTop: "10px" }}
+          className="Margin-Top"
         >
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
@@ -269,12 +256,7 @@ export default function ExperienceForm(
         </Grid>
       </Grid>
 
-      <div
-        style={{
-          display: "flex",
-          padding: "10px",
-        }}
-      >
+      <div className="Experience-Details-Remove-Button">
         <Button
           variant="contained"
           color="secondary"

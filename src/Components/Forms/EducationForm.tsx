@@ -66,18 +66,7 @@ export default function EducationForm(
     [cur_emp?.education, props]
   );
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-        border: "1px solid lightgray",
-        marginTop: "10px",
-      }}
-    >
+    <div className="Education-Details-Form">
       <Grid
         justifyContent="space-between"
         container
@@ -135,9 +124,7 @@ export default function EducationForm(
                 e.target.value
               );
             }}
-            style={{
-              marginBottom: "10px",
-            }}
+            className="Margin-Bottom"
           />
         </Grid>
         <Grid md={5} item>
@@ -207,12 +194,7 @@ export default function EducationForm(
         </Grid>
       </Grid>
 
-      <div
-        style={{
-          display: "flex",
-          padding: "10px",
-        }}
-      >
+      <div className="Education-Details-Form-Remove">
         <Button
           variant="contained"
           color="secondary"

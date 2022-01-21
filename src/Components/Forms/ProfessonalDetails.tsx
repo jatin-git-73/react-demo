@@ -76,16 +76,7 @@ export default function ProfessonalDetails(
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-      }}
-    >
+    <div className="Professional-Details-Page">
       <div>
         <Typography variant="h5">
           Professional Details
@@ -100,14 +91,8 @@ export default function ProfessonalDetails(
           onChange={handleFileUpload}
         />
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent:
-            "space-between",
-        }}
-      >
-        <div style={{ width: "49%" }}>
+      <div className="Professional-details-grid">
+        <div className="Grid-1">
           <TextField
             size="small"
             fullWidth
@@ -134,7 +119,7 @@ export default function ProfessonalDetails(
             }}
           />
         </div>
-        <div style={{ width: "49%" }}>
+        <div className="Grid-1">
           <TextField
             size="small"
             fullWidth
@@ -165,10 +150,8 @@ export default function ProfessonalDetails(
           />
         </div>
       </div>
-      <div style={{ padding: "10px" }}>
-        <FormLabel
-          style={{ float: "left" }}
-        >
+      <div>
+        <FormLabel className="Float-Left">
           Skills
         </FormLabel>
         <div>

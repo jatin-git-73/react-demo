@@ -1,38 +1,165 @@
+/** @format */
+
 .App {
+  padding: 0px 10% 0px 10%;
+}
+
+.App-container {
+  margin-top: 25px;
+  padding: 15px;
+}
+
+.Emp-form-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Emp-Form-Submit {
+  float: right;
+}
+
+.Emp-SearchBox-Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px;
+}
+.Emp-Add-Button-Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 10px;
+}
+.No-result-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.No-data-image-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.No-data-image {
+  width: 50%;
+  height: 50%;
+}
+.Bank-Details-Form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+}
+.Margin-Bottom {
+  margin-bottom: 10px;
+}
+
+.Current-Status-From {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Education-Details-Page {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Education-Details-Form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid lightgray;
+  margin-top: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Education-Details-Form-Remove {
+  display: flex;
+  padding: 10px;
+}
+
+.Experience-Details-Page {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+}
+
+.Experience-Details-Form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid lightgray;
+  margin-top: 10px;
+}
+
+.Margin-Top {
+  margin-top: 10px !important;
+}
+
+.Experience-Details-Remove-Button {
+  display: flex;
+  padding: 10px;
+}
+
+.Personal-Details-Page {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+}
+
+.Profile-Pic-Container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.Professional-Details-Page {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Professional-details-grid {
+  display: flex !important;
+  justify-content: space-between !important;
+  padding-top: 10px;
+}
+
+.Grid-1 {
+  width: 49% !important;
+}
+.Float-Left {
+  float: "left";
 }

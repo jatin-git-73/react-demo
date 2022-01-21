@@ -50,16 +50,7 @@ export default function ExperienceDetails(
     ]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-      }}
-    >
+    <div className="Experience-Details-Page">
       <div>
         <br />
         <Typography variant="h5">

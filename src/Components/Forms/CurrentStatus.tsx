@@ -29,16 +29,7 @@ export default function CurrentStatus(
   let errors =
     props.errors as CurrentStatusError;
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-      }}
-    >
+    <div className="Current-Status-From">
       <div>
         <Typography variant="h5">
           Current Status
@@ -49,7 +40,11 @@ export default function CurrentStatus(
         justifyContent="space-between"
         flexDirection="row"
       >
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             size="small"
             fullWidth
@@ -74,7 +69,11 @@ export default function CurrentStatus(
             }}
           />
         </Grid>
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             size="small"
             fullWidth
@@ -97,12 +96,14 @@ export default function CurrentStatus(
                 e.target.value
               );
             }}
-            style={{
-              marginBottom: "10px",
-            }}
+            className="Margin-Bottom"
           />
         </Grid>
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             size="small"
             fullWidth
@@ -151,7 +152,7 @@ export default function CurrentStatus(
         <Grid
           item
           md={5}
-          style={{ marginTop: "10px" }}
+          className="Margin-Bottom"
         >
           <LocalizationProvider
             dateAdapter={AdapterDateFns}

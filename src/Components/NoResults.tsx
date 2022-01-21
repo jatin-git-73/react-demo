@@ -21,29 +21,10 @@ const NoResults = (
       "`,try with any other text";
   }
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <div className="No-result-container">
+      <div className="No-data-image-container">
         <img
-          style={{
-            width: "50%",
-            height: "50%",
-          }}
+          className="No-data-image"
           src="/images/no-data.svg"
           alt="no data"
         />

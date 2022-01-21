@@ -57,22 +57,7 @@ const getCurStep = (
   return state.cur_step;
 };
 //this is to generate next id when a new emp object is added
-const getNextId = (
-  state: IAppState
-) => {
-  let next_id = 0;
-  //we have employees in list
-  if (state.employees.length > 0) {
-    //fetch the last employee's id
-    next_id =
-      state.employees[
-        state.employees.length - 1
-      ].id;
-  }
-  //generate next employee id
-  next_id++;
-  return next_id;
-};
+
 const getCurEmp = (
   state: IAppState
 ) => {
@@ -99,8 +84,6 @@ const EmpForm = () => {
   //to dispatch actions
   const dispatch = useDispatch();
   //get next id
-  const next_id =
-    useSelector(getNextId);
   //get list of steps
   const steps = getSteps();
   const [state, setState] = useState({
@@ -185,7 +168,6 @@ const EmpForm = () => {
       if (errors.failed === false) {
         let emp = empData;
         if (emp.id === 0) {
-          emp.id = next_id;
           dispatch(saveEmp(emp));
           alert("thanks for joining");
         } else {
@@ -211,7 +193,6 @@ const EmpForm = () => {
         setState(new_state);
       }
     }, [
-      next_id,
       cur_step,
       empData,
       dispatch,
@@ -345,11 +326,7 @@ const EmpForm = () => {
         <Grid
           item
           md={8}
-          style={{
-            display: "flex",
-            justifyContent:
-              "space-between",
-          }}
+          className="Emp-form-footer"
         >
           <Button
             variant="outlined"
@@ -387,7 +364,7 @@ const EmpForm = () => {
             }
             variant="contained"
             onClick={handleSubmitClick}
-            style={{ float: "right" }}
+            className="Emp-Form-Submit"
           >
             Submit
           </Button>

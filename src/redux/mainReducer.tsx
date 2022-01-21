@@ -9,7 +9,6 @@ import {
   SET_EMP_DATA,
   ADD_EMP,
   UPDATE_EMP,
-  REMOVE_EMP,
   SET_EMP_LIST,
   DELETE_EMP,
 } from "./actionTypes";
@@ -24,6 +23,23 @@ const initialState: IAppState = {
   cur_page: "list", //to dicide page
   selected_employee: {} as Employee, //to perform add edit
   cur_step: 0, //if form is open ,indicates the current step
+};
+
+const getNextId = (
+  state: IAppState
+) => {
+  let next_id = 0;
+  //we have employees in list
+  if (state.employees.length > 0) {
+    //fetch the last employee's id
+    next_id =
+      state.employees[
+        state.employees.length - 1
+      ].id;
+  }
+  //generate next employee id
+  next_id++;
+  return next_id;
 };
 
 function mainReducer(
@@ -62,6 +78,13 @@ function mainReducer(
       });
     case ADD_EMP:
       return produce(state, (draft) => {
+        if (
+          action.payload.emp.id === 0
+        ) {
+          action.payload.id =
+            getNextId(state);
+        }
+
         //push new  emp object, in list
         draft.employees.push(
           action.payload

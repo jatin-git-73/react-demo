@@ -8,11 +8,9 @@ import {
 } from "react-redux";
 import EmpForm from "./Components/EmpForm";
 import EmpListPage from "./Components/EmpListPage";
-import {
-  fetchEmpyList,
-  saveEmp,
-} from "./redux/actions";
+import { fetchEmpyList } from "./redux/actions";
 import { IAppState } from "./redux/types";
+import "./App.css";
 
 const getCurrentPage = (
   state: IAppState
@@ -36,17 +34,8 @@ function App() {
   }
 
   return (
-    <div
-      style={{
-        padding: "0px 10% 0px 10% ",
-      }}
-    >
-      <Paper
-        style={{
-          marginTop: "25px",
-          padding: "15px",
-        }}
-      >
+    <div className="App">
+      <Paper className="App-container">
         {content}
       </Paper>
     </div>

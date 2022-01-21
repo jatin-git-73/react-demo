@@ -30,16 +30,7 @@ export default function BankDetails(
   let errors =
     props.errors as BankDetailsError;
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        textAlign: "center",
-      }}
-    >
+    <div className="Bank-Details-Form">
       <div>
         <Typography variant="h5">
           Bank Details
@@ -50,7 +41,11 @@ export default function BankDetails(
         direction="row"
         justifyContent="space-between"
       >
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             fullWidth
             size="small"
@@ -76,7 +71,11 @@ export default function BankDetails(
             }}
           />
         </Grid>
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             fullWidth
             error={
@@ -99,12 +98,13 @@ export default function BankDetails(
                 e.target.value
               );
             }}
-            style={{
-              marginBottom: "10px",
-            }}
           />
         </Grid>
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             fullWidth
             error={
@@ -132,7 +132,11 @@ export default function BankDetails(
             size="small"
           />
         </Grid>
-        <Grid item md={5}>
+        <Grid
+          item
+          md={5}
+          className="Margin-Top"
+        >
           <TextField
             fullWidth
             label="Adhaar Card Number"
