@@ -27,7 +27,6 @@ export function* updateUserSaga(
         emp: action.payload,
       })
       .then((res) => {
-        console.log("res", res.data);
         return res.data;
       })
       .then((res) => {
@@ -43,7 +42,6 @@ export function* updateUserSaga(
     });
   } catch (e) {
     alert("unable to save data:");
-    console.log("update user saga", e);
   }
 }
 
@@ -54,7 +52,6 @@ export function* addUserSaga(action) {
         emp: action.payload,
       })
       .then((res) => {
-        console.log("res", res.data);
         return res.data;
       })
       .then((res) => {
@@ -70,7 +67,6 @@ export function* addUserSaga(action) {
     });
   } catch (e) {
     alert("unable to save data:");
-    console.log("addUserSaga", e);
   }
 }
 
@@ -83,7 +79,6 @@ export function* deleteUserSaga(
         id: action.payload,
       })
       .then((res) => {
-        console.log("res", res.data);
         return res.data;
       })
       .then((res) => {
@@ -99,7 +94,6 @@ export function* deleteUserSaga(
     });
   } catch (e) {
     alert("unable to delete employee");
-    console.log("addUserSaga", e);
   }
 }
 
@@ -109,7 +103,6 @@ export function* fetchEmpList(action) {
       api_url + "/"
     )
       .then((res) => {
-        console.log("res", res.data);
         return res.data;
       })
       .then((res) => {
@@ -133,10 +126,6 @@ export function* fetchEmpList(action) {
     });
   } catch (e) {
     alert("unable to fetch list data:");
-    console.log(
-      "fetchEmpList error ",
-      e
-    );
     yield put({
       type: "EMP_LIST_FETCH_FAILED",
       message: e.message,
